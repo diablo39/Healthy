@@ -7,12 +7,16 @@ namespace Healthy.Core.ConfigurationBuilder
 {
     internal partial class HealthyConfigurationBuilder
     {
-        Lazy<TestsRunner> _testRunner;
-
         public void AddTest(ITest test)
         {
-            var testRunner = _testRunner.Value;
+            var testRunner = _testRunnerAccessor.Value;
             testRunner.AddTest(test);
+        }
+
+        public void SetDefaultTestInterval(TimeSpan timeSpan)
+        {
+            var testRunner = _testRunnerAccessor.Value;
+            testRunner.SetDefaultTestInterval(timeSpan);
         }
     }
 }

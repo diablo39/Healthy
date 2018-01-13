@@ -12,7 +12,7 @@ namespace Healthy.Core
         {
             var healthyEngine = (HealthyEngine)app.ApplicationServices.GetService(typeof(HealthyEngine));
 
-            healthyEngine.RegisterService((TestsRunner)app.ApplicationServices.GetService(typeof(TestsRunner)));
+            healthyEngine.RegisterService((TestsRunnerService)app.ApplicationServices.GetService(typeof(TestsRunnerService)));
 
             var configurationBuilder = new HealthyConfigurationBuilder(healthyEngine);
 

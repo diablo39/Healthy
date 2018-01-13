@@ -39,17 +39,22 @@ namespace Healthy.SampleApplication
             app.UseHealthy(cfg => // set backend for healthy, allow custom repository. InMemory stores only last execution
                 cfg.ConfigureTests(tests =>
                 {
-                    //tests.SetDefaultScheduler(TimeSpan.FromSeconds(15)); // run each test every 15 seconds
+                    tests.SetDefaultTestInterval(TimeSpan.FromSeconds(7)); // run each test every 15 seconds
+
+                    tests.AddSqlServerTest("name of sql test", sqlConnectionString);
+                    tests.AddSqlServerTest("Name of sql test with query", sqlConnectionString, sqlQuery);
+
                     //tests.AddRedisTest("name of test", resisConnectionString)/*.RunEvery(TimeSpan | int) seconds*/;
                     //tests.AddRedisTest("name of test", resisConnectionString, redisTestConfiguration => { });
                     //tests.AddRedisTest("name of test", resisConnectionString, new RedisTest()); // custom redis tester. Have access to StaskExchange.Redis
 
-                    tests.AddSqlServerTest("name of sql test", sqlConnectionString);
-                    tests.AddSqlServerTest("Name of sql test with query", sqlConnectionString, sqlQuery);
+
                     //tests.AddFileSystemTest("name of test", fileSystemTestConfiguration => { });
 
                     // tests.AddWebTest("name of test", "url"); //GET
                     // tests.AddWebTest("name of test", "url", "POST", "BODY"); //POST
+
+                    //tests.AddTestResultStorage();
                 })
                 .ConfigureOutputs(o =>
                 {

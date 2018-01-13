@@ -10,12 +10,12 @@ namespace Healthy.Core.ConfigurationBuilder
     {
         private readonly HealthyEngine _engine;
 
-        public HealthyEngine Engine => _engine;
+        private Lazy<TestsRunnerService> _testRunnerAccessor;
 
         public HealthyConfigurationBuilder(HealthyEngine engine)
         {
             _engine = engine;
-            _testRunner = new Lazy<TestsRunner>(() => _engine.GetService<TestsRunner>());
+            _testRunnerAccessor = new Lazy<TestsRunnerService>(() => _engine.GetService<TestsRunnerService>());
         }
 
         public IHealthyConfigurationBuilder ConfigureTests(Action<ITestsConfigurationBuilder> builder)

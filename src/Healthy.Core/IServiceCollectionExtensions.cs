@@ -10,7 +10,7 @@ namespace Healthy.Core
         public static void AddHealthy(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<TestResultProcessor, TestResultProcessorAggregator>();
-            serviceCollection.AddTransient<TestsRunner>();
+            serviceCollection.AddTransient<TestsRunnerService>();
             serviceCollection.AddSingleton<HealthyEngine>();
             serviceCollection.AddSingleton<TestResultProcessor, TestResultProcessorAggregator>();
         }
