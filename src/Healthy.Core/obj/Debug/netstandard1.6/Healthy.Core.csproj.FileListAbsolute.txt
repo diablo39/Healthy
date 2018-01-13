@@ -1,6 +1,0 @@
-e:\Source\Repos\Healthy\src\Healthy.Core\bin\Debug\netstandard1.6\Healthy.Core.deps.json
-e:\Source\Repos\Healthy\src\Healthy.Core\bin\Debug\netstandard1.6\Healthy.Core.dll
-e:\Source\Repos\Healthy\src\Healthy.Core\bin\Debug\netstandard1.6\Healthy.Core.pdb
-e:\Source\Repos\Healthy\src\Healthy.Core\obj\Debug\netstandard1.6\Healthy.Core.AssemblyInfo.cs
-e:\Source\Repos\Healthy\src\Healthy.Core\obj\Debug\netstandard1.6\Healthy.Core.dll
-e:\Source\Repos\Healthy\src\Healthy.Core\obj\Debug\netstandard1.6\Healthy.Core.pdb

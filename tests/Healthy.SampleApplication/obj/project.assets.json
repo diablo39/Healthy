@@ -2995,6 +2995,35 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
+      },
+      "Healthy.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.1.2",
+          "Microsoft.Extensions.DependencyInjection": "1.1.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "bin/placeholder/netstandard1.6/Healthy.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/netstandard1.6/Healthy.Core.dll": {}
+        }
+      },
+      "Healthy.Redis/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v1.6",
+        "dependencies": {
+          "Healthy.Core": "1.0.0",
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "bin/placeholder/netstandard1.6/Healthy.Redis.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/netstandard1.6/Healthy.Redis.dll": {}
+        }
       }
     }
   },
@@ -8576,10 +8605,22 @@
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._"
       ]
+    },
+    "Healthy.Core/1.0.0": {
+      "type": "project",
+      "path": "../../src/Healthy.Core/Healthy.Core.csproj",
+      "msbuildProject": "../../src/Healthy.Core/Healthy.Core.csproj"
+    },
+    "Healthy.Redis/1.0.0": {
+      "type": "project",
+      "path": "../../src/Healthy.Redis/Healthy.Redis.csproj",
+      "msbuildProject": "../../src/Healthy.Redis/Healthy.Redis.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v1.1": [
+      "Healthy.Core >= 1.0.0",
+      "Healthy.Redis >= 1.0.0",
       "Microsoft.AspNetCore >= 1.1.2",
       "Microsoft.NETCore.App >= 1.1.2"
     ]
@@ -8603,7 +8644,14 @@
       },
       "frameworks": {
         "netcoreapp1.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "E:\\Source\\Repos\\Healthy\\src\\Healthy.Core\\Healthy.Core.csproj": {
+              "projectPath": "E:\\Source\\Repos\\Healthy\\src\\Healthy.Core\\Healthy.Core.csproj"
+            },
+            "E:\\Source\\Repos\\Healthy\\src\\Healthy.Redis\\Healthy.Redis.csproj": {
+              "projectPath": "E:\\Source\\Repos\\Healthy\\src\\Healthy.Redis\\Healthy.Redis.csproj"
+            }
+          }
         }
       }
     },

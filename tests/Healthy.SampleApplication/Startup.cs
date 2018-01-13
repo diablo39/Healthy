@@ -39,7 +39,7 @@ namespace Healthy.SampleApplication
             app.UseHealthy(cfg =>
                 cfg.ConfigureTests(tests =>
             {
-                // tests.AddRedisTest("name of test", resisConnectionString);
+                tests.AddRedisTest("name of test", resisConnectionString);
                 // tests.AddRedisTest("name of test", resisConnectionString, redisTestConfiguration => { });
 
                 // tests.AddSqlServerTest("name of test", sqlConnectionString);

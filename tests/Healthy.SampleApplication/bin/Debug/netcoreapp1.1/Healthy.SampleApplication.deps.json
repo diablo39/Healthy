@@ -23,6 +23,8 @@
     ".NETCoreApp,Version=v1.1": {
       "healthy.sampleapplication/1.0.0": {
         "dependencies": {
+          "Healthy.Core": "1.0.0",
+          "Healthy.Redis": "1.0.0",
           "Microsoft.AspNetCore": "1.1.2",
           "Microsoft.NETCore.App": "1.1.2"
         },
@@ -727,6 +729,31 @@
         },
         "compile": {
           "lib/netstandard1.0/System.Text.Encodings.Web.dll": {}
+        }
+      },
+      "healthy.core/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Abstractions": "1.1.2",
+          "Microsoft.Extensions.DependencyInjection": "1.1.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "runtime": {
+          "Healthy.Core.dll": {}
+        },
+        "compile": {
+          "Healthy.Core.dll": {}
+        }
+      },
+      "healthy.redis/1.0.0": {
+        "dependencies": {
+          "Healthy.Core": "1.0.0",
+          "NETStandard.Library": "1.6.1"
+        },
+        "runtime": {
+          "Healthy.Redis.dll": {}
+        },
+        "compile": {
+          "Healthy.Redis.dll": {}
         }
       },
       "libuv/1.9.1": {
@@ -2717,6 +2744,16 @@
       "sha512": "sha512-/nNy/lyDADvqUxe21y1ZW+etFVPojFPwYgyNz7aG6R3X4uNYmIuwgD8njOzIvrKP47nzKF6AOIB4AafQVLNJyA==",
       "path": "system.text.encodings.web/4.3.1",
       "hashPath": "system.text.encodings.web.4.3.1.nupkg.sha512"
+    },
+    "healthy.core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "healthy.redis/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "libuv/1.9.1": {
       "type": "package",
