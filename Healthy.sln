@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FF95EAE5-FDA8-4976-8E63-20D22063497C}"
 EndProject
@@ -26,7 +26,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Healthy.Tests.Redis", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Healthy.Tests.SqlServer", "src\Healthy.Tests.SqlServer\Healthy.Tests.SqlServer.csproj", "{0B47C2B1-6E22-4698-9748-4A916F218654}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Healthy.Storage.InMemory", "Healthy.Storage.InMemory\Healthy.Storage.InMemory.csproj", "{79FD7D4B-871D-461D-B263-AEA4DF75DB4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Healthy.Storage.InMemory", "Healthy.Storage.InMemory\Healthy.Storage.InMemory.csproj", "{79FD7D4B-871D-461D-B263-AEA4DF75DB4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Outputs", "Outputs", "{13D273E5-7234-4541-9725-C5805309BFB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -150,5 +152,9 @@ Global
 		{64F87782-88B5-4CC8-BFFF-8718EBC286A2} = {E5B56741-AFAA-4285-93B4-E6B17803B942}
 		{0B47C2B1-6E22-4698-9748-4A916F218654} = {E5B56741-AFAA-4285-93B4-E6B17803B942}
 		{79FD7D4B-871D-461D-B263-AEA4DF75DB4A} = {A3E1833C-E5EF-47D5-A51F-BE212474727B}
+		{13D273E5-7234-4541-9725-C5805309BFB6} = {FF95EAE5-FDA8-4976-8E63-20D22063497C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FBA39B11-1D78-47AA-9EBC-58B5A0113DC8}
 	EndGlobalSection
 EndGlobal

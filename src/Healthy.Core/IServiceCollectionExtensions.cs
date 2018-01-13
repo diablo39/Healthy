@@ -12,6 +12,7 @@ namespace Healthy.Core
             serviceCollection.AddTransient<TestResultProcessor, TestResultProcessorAggregator>();
             serviceCollection.AddTransient<TestsRunner>();
             serviceCollection.AddSingleton<HealthyEngine>();
+            serviceCollection.AddSingleton<TestResultProcessor, TestResultProcessorAggregator>();
         }
     }
 }
