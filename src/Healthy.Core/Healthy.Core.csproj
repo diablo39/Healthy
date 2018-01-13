@@ -12,6 +12,6 @@
     <Folder Include="Engine\Metrics\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Healthy.Core.Abstractions\Healthy.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\Healthy.Core.Abstractions\Healthy.Core.Abstractions.csproj" />
   </ItemGroup>
 </Project>
