@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -11,31 +12,37 @@ namespace Healthy.Core.Engine.Tests
     {
         private TimeSpan _defaultTestInterval = TimeSpan.FromSeconds(15);
 
-        private List<TestRunner> _testRunners = new List<TestRunner>();
+        private ConcurrentBag<TestRunner> _testRunners = new ConcurrentBag<TestRunner>();
 
         private bool _isRunning = false;
 
         private readonly ILoggerFactory _loggerFactory;
+
         private readonly TestResultProcessor _testResultProcessor;
+
+        private TestResultObserver _observer;
+
+        internal IObservable<TestResult> TestResults { get => _observer; }
 
         public TestsRunnerService(ILoggerFactory loggerFactory, TestResultProcessor testResultProcessor)
         {
             _loggerFactory = loggerFactory;
             _testResultProcessor = testResultProcessor;
+            _observer = new TestResultObserver();
         }
 
-        public void AddTest(ITest test)
+        public TestRunner AddTest(ITest test)
         {
-            lock (_testRunners)
-            {
-                var testRunner = new TestRunner(test, _defaultTestInterval, _loggerFactory.CreateLogger<TestRunner>());
-                _testRunners.Add(testRunner);
+            var testRunner = new TestRunner(test, _defaultTestInterval, _loggerFactory.CreateLogger<TestRunner>());
+            testRunner.Subscribe(_observer);
+            _testRunners.Add(testRunner);
 
-                if (_isRunning)
-                {
-                    testRunner.Start();
-                }
+            if (_isRunning)
+            {
+                testRunner.Start();
             }
+
+            return testRunner;
         }
 
         public void SetDefaultTestInterval(int interval)
@@ -52,15 +59,11 @@ namespace Healthy.Core.Engine.Tests
         {
             if (_isRunning) return;
 
-            lock (_testRunners)
-            {
-                _isRunning = true;
+            _isRunning = true;
 
-                for (int i = 0; i < _testRunners.Count; i++)
-                {
-                    var testRunner = _testRunners[i];
-                    testRunner.Start();
-                }
+            foreach (var testRunner in _testRunners)
+            {
+                testRunner.Start();
             }
         }
 
@@ -68,29 +71,21 @@ namespace Healthy.Core.Engine.Tests
         {
             if (!_isRunning) return;
 
-            lock (_testRunners)
-            {
-                for (int i = 0; i < _testRunners.Count; i++)
-                {
-                    var testRunner = _testRunners[i];
-                    testRunner.Stop();
-                }
+            _isRunning = false;
 
-                _isRunning = false;
+            foreach (var testRunner in _testRunners)
+            {
+                testRunner.Stop();
             }
         }
 
         public void Dispose()
         {
-            lock (_testRunners)
+            _isRunning = false;
+            TestRunner testRunner = null;
+            while (_testRunners.TryTake(out testRunner))
             {
-                while (_testRunners.Count > 0)
-                {
-                    var testRunner = _testRunners[0];
-                    _testRunners.RemoveAt(0);
-                    testRunner.Dispose();
-                }
-                _isRunning = false;
+                testRunner.Dispose();
             }
         }
     }

@@ -1,5 +1,4 @@
 using System;
-using Microsoft.AspNetCore.Builder;
 using Healthy.Core.Engine;
 using Healthy.Core.Engine.Tests;
 
@@ -10,12 +9,10 @@ namespace Healthy.Core.ConfigurationBuilder
     {
         private readonly HealthyEngine _engine;
 
-        private Lazy<TestsRunnerService> _testRunnerAccessor;
-
         public HealthyConfigurationBuilder(HealthyEngine engine)
         {
             _engine = engine;
-            _testRunnerAccessor = new Lazy<TestsRunnerService>(() => _engine.GetService<TestsRunnerService>());
+            _testRunnerServiceAccessor = new Lazy<TestsRunnerService>(() => _engine.GetService<TestsRunnerService>());
         }
 
         public IHealthyConfigurationBuilder ConfigureTests(Action<ITestsConfigurationBuilder> builder)

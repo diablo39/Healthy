@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Reactive.Linq;
 using Healthy.Core;
 
 namespace Healthy.SampleApplication
@@ -26,7 +27,6 @@ namespace Healthy.SampleApplication
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             //loggerFactory.AddConsole(true); - added by default
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -39,12 +39,19 @@ namespace Healthy.SampleApplication
             app.UseHealthy(cfg => // set backend for healthy, allow custom repository. InMemory stores only last execution
                 cfg.ConfigureTests(tests =>
                 {
-                    tests.SetDefaultTestInterval(TimeSpan.FromSeconds(7)); // run each test every 15 seconds
+                    tests.SetDefaultTestInterval(TimeSpan.FromSeconds(15)); // by default run each test every 15 seconds
 
-                    tests.AddSqlServerTest("name of sql test", sqlConnectionString);
-                    tests.AddSqlServerTest("Name of sql test with query", sqlConnectionString, sqlQuery);
+                    tests.AddSqlServerTest("name of sql test", sqlConnectionString)
+                            .RunEvery(TimeSpan.FromSeconds(10))
+                            .AddTag("test tag")
+                            .AddTags("test", "test");
 
-                    //tests.AddRedisTest("name of test", resisConnectionString)/*.RunEvery(TimeSpan | int) seconds*/;
+                    tests.AddSqlServerTest("Name of sql test with query", sqlConnectionString, sqlQuery)
+                            .RunEvery(7);
+
+                    #region new features
+
+                    //tests.AddRedisTest("name of test", resisConnectionString).RunEvery(TimeSpan | int) seconds*/;
                     //tests.AddRedisTest("name of test", resisConnectionString, redisTestConfiguration => { });
                     //tests.AddRedisTest("name of test", resisConnectionString, new RedisTest()); // custom redis tester. Have access to StaskExchange.Redis
 
@@ -53,21 +60,24 @@ namespace Healthy.SampleApplication
 
                     // tests.AddWebTest("name of test", "url"); //GET
                     // tests.AddWebTest("name of test", "url", "POST", "BODY"); //POST
+                    #endregion
 
-                    //tests.AddTestResultStorage();
+                    tests.AddTestResultStorage((ITestResultStorage)null);
+                    tests.RegisterTestResultProcessor(e => Console.WriteLine(e.ToString()));
                 })
                 .ConfigureOutputs(o =>
                 {
                     //o.AddHttpPanel("/path/to/output"); // good looking page with statistics
-                    //o.AddHealthCheckUrl("/_health"); // enpoint that can be monitored by haproxy, checks 
+                    o.AddHealthCheckUrl("/_health"); // enpoint that can be monitored by haproxy, checks 
                     //o.AddWebHook("uri", Formatters.Json, TestStatus); // web hook after test run 
                     //o.AddHeartBeat("url", 15, "GET", true); // ping page if all tests pass
                 })
-                .ConfigureMetrics(o => {
+                .ConfigureMetrics(o =>
+                {
                     // add monitors - based on http responses, windows counters, etc...
                 })
-                
-            ); 
+
+            );
 
             app.Run(async (context) =>
             {

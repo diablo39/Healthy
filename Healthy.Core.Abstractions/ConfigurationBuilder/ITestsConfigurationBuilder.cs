@@ -5,7 +5,12 @@ namespace Healthy.Core.ConfigurationBuilder
 {
     public interface ITestsConfigurationBuilder
     {
-        void AddTest(ITest test);
+        ITestConfigurator AddTest(ITest test);
+
         void SetDefaultTestInterval(TimeSpan timeSpan);
+
+        void AddTestResultStorage(ITestResultStorage testResultStorage);
+
+        void RegisterTestResultProcessor(Action<TestResult> processor);
     }
 }

@@ -9,17 +9,17 @@ namespace Healthy.Core
         ///<summary>
         /// Tests if db is available
         ///</summary>
-        public static void AddSqlServerTest(this ITestsConfigurationBuilder cfg, string testName, string connectionString)
+        public static ITestConfigurator AddSqlServerTest(this ITestsConfigurationBuilder cfg, string testName, string connectionString)
         {
-            cfg.AddTest(new SqlTest(testName, connectionString));
+            return cfg.AddTest(new SqlTest(testName, connectionString));
         }
 
         ///<summary>
         /// Tests if db is available and runs query against database
         ///</summary>
-        public static void AddSqlServerTest(this ITestsConfigurationBuilder cfg, string testName, string connectionString, string sqlQuery)
+        public static ITestConfigurator AddSqlServerTest(this ITestsConfigurationBuilder cfg, string testName, string connectionString, string sqlQuery)
         {
-            cfg.AddTest(new SqlTest(testName, connectionString, sqlQuery));
+            return cfg.AddTest(new SqlTest(testName, connectionString, sqlQuery));
         }
     }
 }
