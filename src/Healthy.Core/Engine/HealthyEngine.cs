@@ -39,10 +39,10 @@ namespace Healthy.Core.Engine
             }
         }
 
-        public IEnumerable<T> GetService<T>()
+        public T GetService<T>()
             where T : IService
         {
-            var result = _services.OfType<T>();
+            var result = _services.OfType<T>().FirstOrDefault();
             return result;
         }
 

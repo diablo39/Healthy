@@ -23,10 +23,10 @@ namespace Healthy.Core.Engine.Tests
 
         public IEnumerable<ITest> Tests => _tests.AsReadOnly();
 
-        public TestsRunner(ILogger<TestsRunner> logger, Action<TestResult> testResultProcessor)
+        public TestsRunner(ILogger<TestsRunner> logger)
         {
             _logger = logger;
-            _testResultProcessor = testResultProcessor;
+            //testResultProcessor = testResultProcessor;
         }
 
         public void AddTest(string testName, ITest test)
@@ -91,8 +91,9 @@ namespace Healthy.Core.Engine.Tests
         private async Task ExecuteTest(ITest test)
         {
             var result = await test.ExecuteAsync();
-
-            _testResultProcessor(result);
+            
+            if(_testResultProcessor != null)
+                _testResultProcessor(result);
 
             _logger.LogInformation(result.ToString());
         }
