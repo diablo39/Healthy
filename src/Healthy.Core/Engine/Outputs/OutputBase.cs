@@ -1,4 +1,4 @@
-namespace Healthy.Core.Engine
+namespace Healthy.Core.Engine.Outputs
 {
     public abstract class OutputBase
     {

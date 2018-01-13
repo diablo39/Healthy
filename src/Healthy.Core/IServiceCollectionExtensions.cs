@@ -1,4 +1,5 @@
 using System;
+using Healthy.Core.Engine;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Healthy.Core
@@ -7,7 +8,7 @@ namespace Healthy.Core
     {
         public static void AddHealthy(this IServiceCollection serviceCollection)
         {
-            
+            serviceCollection.AddSingleton<HealthyEngine>();
         }
     }
 }
