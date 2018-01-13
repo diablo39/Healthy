@@ -1,6 +1,0 @@
-e:\Source\Repos\Healthy\src\Healthy.Web\bin\Debug\netstandard1.4\Healthy.Web.deps.json
-e:\Source\Repos\Healthy\src\Healthy.Web\bin\Debug\netstandard1.4\Healthy.Web.dll
-e:\Source\Repos\Healthy\src\Healthy.Web\bin\Debug\netstandard1.4\Healthy.Web.pdb
-e:\Source\Repos\Healthy\src\Healthy.Web\obj\Debug\netstandard1.4\Healthy.Web.AssemblyInfo.cs
-e:\Source\Repos\Healthy\src\Healthy.Web\obj\Debug\netstandard1.4\Healthy.Web.dll
-e:\Source\Repos\Healthy\src\Healthy.Web\obj\Debug\netstandard1.4\Healthy.Web.pdb

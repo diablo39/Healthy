@@ -1,4 +1,0 @@
-namespace Healthy.Core
-{
-    
-}

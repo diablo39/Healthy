@@ -1,3 +1,5 @@
+using Healthy.Core.Engine.Tests;
+
 namespace Healthy.Core.ConfigurationBuilder
 {
     public interface ITestsConfigurationBuilder

@@ -14,9 +14,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Healthy.Core\Healthy.Core.csproj" />
-    <ProjectReference Include="..\..\src\Healthy.Redis\Healthy.Redis.csproj" />
-    <ProjectReference Include="..\..\src\Healthy.FileSystem\Healthy.FileSystem.csproj" />
-    <ProjectReference Include="..\..\src\Healthy.SqlServer\Healthy.SqlServer.csproj" />
+    <ProjectReference Include="..\..\src\Healthy.Tests.ElasticSearch\Healthy.Tests.ElasticSearch.csproj" />
+    <ProjectReference Include="..\..\src\Healthy.Tests.FileSystem\Healthy.Tests.FileSystem.csproj" />
+    <ProjectReference Include="..\..\src\Healthy.Tests.Http\Healthy.Tests.Http.csproj" />
+    <ProjectReference Include="..\..\src\Healthy.Tests.Redis\Healthy.Tests.Redis.csproj" />
+    <ProjectReference Include="..\..\src\Healthy.Tests.SqlServer\Healthy.Tests.SqlServer.csproj" />
   </ItemGroup>
 
 </Project>
