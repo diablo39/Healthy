@@ -9,7 +9,7 @@ namespace Healthy.Tests.SqlServer
 {
     internal class SqlTest : ITest
     {
-        private const string DefaultSqlQuery = "select 1";
+        private const string DefaultSqlQuery = "select 1;";
 
         private readonly string _connectionString;
         private readonly string _sqlQuery;

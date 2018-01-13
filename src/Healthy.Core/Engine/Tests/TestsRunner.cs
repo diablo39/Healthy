@@ -19,11 +19,14 @@ namespace Healthy.Core.Engine.Tests
 
         private readonly ILogger<TestsRunner> _logger;
 
+        private readonly Action<TestResult> _testResultProcessor;
+
         public IEnumerable<ITest> Tests => _tests.AsReadOnly();
 
-        public TestsRunner(ILogger<TestsRunner> logger)
+        public TestsRunner(ILogger<TestsRunner> logger, Action<TestResult> testResultProcessor)
         {
             _logger = logger;
+            _testResultProcessor = testResultProcessor;
         }
 
         public void AddTest(string testName, ITest test)
@@ -89,8 +92,9 @@ namespace Healthy.Core.Engine.Tests
         {
             var result = await test.ExecuteAsync();
 
+            _testResultProcessor(result);
+
             _logger.LogInformation(result.ToString());
-            // store result
         }
 
         public void Dispose()

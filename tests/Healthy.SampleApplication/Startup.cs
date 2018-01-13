@@ -38,30 +38,31 @@ namespace Healthy.SampleApplication
 
             app.UseHealthy(cfg => // set backend for healthy, allow custom repository. InMemory stores only last execution
                 cfg.ConfigureTests(tests =>
-            {
-                //tests.SetDefaultScheduler(TimeSpan.FromSeconds(15)); // run each test every 15 seconds
-                //tests.AddRedisTest("name of test", resisConnectionString)/*.RunEvery(TimeSpan | int) seconds*/;
-                //tests.AddRedisTest("name of test", resisConnectionString, redisTestConfiguration => { });
-                //tests.AddRedisTest("name of test", resisConnectionString, new RedisTest()); // custom redis tester. Have access to StaskExchange.Redis
+                {
+                    //tests.SetDefaultScheduler(TimeSpan.FromSeconds(15)); // run each test every 15 seconds
+                    //tests.AddRedisTest("name of test", resisConnectionString)/*.RunEvery(TimeSpan | int) seconds*/;
+                    //tests.AddRedisTest("name of test", resisConnectionString, redisTestConfiguration => { });
+                    //tests.AddRedisTest("name of test", resisConnectionString, new RedisTest()); // custom redis tester. Have access to StaskExchange.Redis
 
-                tests.AddSqlServerTest("name of sql test", sqlConnectionString);
-                tests.AddSqlServerTest("Name of sql test with query", sqlConnectionString, sqlQuery);
+                    tests.AddSqlServerTest("name of sql test", sqlConnectionString);
+                    tests.AddSqlServerTest("Name of sql test with query", sqlConnectionString, sqlQuery);
+                    //tests.AddFileSystemTest("name of test", fileSystemTestConfiguration => { });
 
-                //tests.AddFileSystemTest("name of test", fileSystemTestConfiguration => { });
-
-                // tests.AddWebTest("name of test", "url"); //GET
-                // tests.AddWebTest("name of test", "url", "POST", "BODY"); //POST
-            })
-            .ConfigureOutputs(o =>
-            {
-                //o.AddHttpPanel("/path/to/output"); // good looking page with statistics
-                //o.AddHealthCheckUrl("/_health"); // enpoint that can be monitored by haproxy, checks 
-                //o.AddWebHook("uri", Formatters.Json, TestStatus); // web hook after test run 
-                //o.AddHeartBeat("url", 15, "GET", true); // ping page if all tests pass
-            })
-            .ConfigureMetrics(o => {
-
-            })); // add monitors - based on http responses, windows counters, etc...
+                    // tests.AddWebTest("name of test", "url"); //GET
+                    // tests.AddWebTest("name of test", "url", "POST", "BODY"); //POST
+                })
+                .ConfigureOutputs(o =>
+                {
+                    //o.AddHttpPanel("/path/to/output"); // good looking page with statistics
+                    //o.AddHealthCheckUrl("/_health"); // enpoint that can be monitored by haproxy, checks 
+                    //o.AddWebHook("uri", Formatters.Json, TestStatus); // web hook after test run 
+                    //o.AddHeartBeat("url", 15, "GET", true); // ping page if all tests pass
+                })
+                .ConfigureMetrics(o => {
+                    // add monitors - based on http responses, windows counters, etc...
+                })
+                
+            ); 
 
             app.Run(async (context) =>
             {

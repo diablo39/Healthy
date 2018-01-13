@@ -20,7 +20,7 @@ namespace Healthy.Core.Engine
         {
             _loggerFactory = loggerFactory;
             _logger = loggerFactory.CreateLogger<HealthyEngine>();
-            _services.Add(new TestsRunner(loggerFactory.CreateLogger<TestsRunner>()));
+
         }
 
         public void Start()
@@ -39,11 +39,16 @@ namespace Healthy.Core.Engine
             }
         }
 
-        public T GetService<T>()
+        public IEnumerable<T> GetService<T>()
             where T : IService
         {
-            var result = _services.OfType<T>().FirstOrDefault();
+            var result = _services.OfType<T>();
             return result;
+        }
+
+        public void RegisterService(IService service)
+        {
+            _services.Add(service);
         }
     }
 }
