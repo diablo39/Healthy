@@ -1,0 +1,6 @@
+e:\Source\Repos\Healthy\src\Healthy.ElasticSearch\bin\Debug\netstandard1.4\Healthy.ElasticSearch.deps.json
+e:\Source\Repos\Healthy\src\Healthy.ElasticSearch\bin\Debug\netstandard1.4\Healthy.ElasticSearch.dll
+e:\Source\Repos\Healthy\src\Healthy.ElasticSearch\bin\Debug\netstandard1.4\Healthy.ElasticSearch.pdb
+e:\Source\Repos\Healthy\src\Healthy.ElasticSearch\obj\Debug\netstandard1.4\Healthy.ElasticSearch.AssemblyInfo.cs
+e:\Source\Repos\Healthy\src\Healthy.ElasticSearch\obj\Debug\netstandard1.4\Healthy.ElasticSearch.dll
+e:\Source\Repos\Healthy\src\Healthy.ElasticSearch\obj\Debug\netstandard1.4\Healthy.ElasticSearch.pdb

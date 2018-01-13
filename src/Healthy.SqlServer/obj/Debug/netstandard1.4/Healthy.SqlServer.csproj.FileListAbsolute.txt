@@ -1,0 +1,6 @@
+e:\Source\Repos\Healthy\src\Healthy.SqlServer\bin\Debug\netstandard1.4\Healthy.SqlServer.deps.json
+e:\Source\Repos\Healthy\src\Healthy.SqlServer\bin\Debug\netstandard1.4\Healthy.SqlServer.dll
+e:\Source\Repos\Healthy\src\Healthy.SqlServer\bin\Debug\netstandard1.4\Healthy.SqlServer.pdb
+e:\Source\Repos\Healthy\src\Healthy.SqlServer\obj\Debug\netstandard1.4\Healthy.SqlServer.AssemblyInfo.cs
+e:\Source\Repos\Healthy\src\Healthy.SqlServer\obj\Debug\netstandard1.4\Healthy.SqlServer.dll
+e:\Source\Repos\Healthy\src\Healthy.SqlServer\obj\Debug\netstandard1.4\Healthy.SqlServer.pdb

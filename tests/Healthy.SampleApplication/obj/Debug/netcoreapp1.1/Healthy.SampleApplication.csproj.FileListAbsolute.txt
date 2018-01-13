@@ -1,0 +1,10 @@
+E:\Source\Repos\Healthy\tests\Healthy.SampleApplication\bin\Debug\netcoreapp1.1\Healthy.SampleApplication.deps.json
+E:\Source\Repos\Healthy\tests\Healthy.SampleApplication\bin\Debug\netcoreapp1.1\Healthy.SampleApplication.runtimeconfig.json
+E:\Source\Repos\Healthy\tests\Healthy.SampleApplication\bin\Debug\netcoreapp1.1\Healthy.SampleApplication.runtimeconfig.dev.json
+E:\Source\Repos\Healthy\tests\Healthy.SampleApplication\bin\Debug\netcoreapp1.1\Healthy.SampleApplication.dll
+E:\Source\Repos\Healthy\tests\Healthy.SampleApplication\bin\Debug\netcoreapp1.1\Healthy.SampleApplication.pdb
+E:\Source\Repos\Healthy\tests\Healthy.SampleApplication\obj\Debug\netcoreapp1.1\Healthy.SampleApplication.AssemblyInfo.cs
+E:\Source\Repos\Healthy\tests\Healthy.SampleApplication\obj\Debug\netcoreapp1.1\Healthy.SampleApplication.dll
+E:\Source\Repos\Healthy\tests\Healthy.SampleApplication\obj\Debug\netcoreapp1.1\Healthy.SampleApplication.pdb
+E:\Source\Repos\Healthy\tests\Healthy.SampleApplication\bin\Debug\netcoreapp1.1\Healthy.Core.dll
+E:\Source\Repos\Healthy\tests\Healthy.SampleApplication\bin\Debug\netcoreapp1.1\Healthy.Core.pdb

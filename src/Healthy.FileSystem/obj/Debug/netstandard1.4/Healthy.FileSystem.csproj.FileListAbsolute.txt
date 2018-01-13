@@ -1,0 +1,6 @@
+e:\Source\Repos\Healthy\src\Healthy.FileSystem\bin\Debug\netstandard1.4\Healthy.FileSystem.deps.json
+e:\Source\Repos\Healthy\src\Healthy.FileSystem\bin\Debug\netstandard1.4\Healthy.FileSystem.dll
+e:\Source\Repos\Healthy\src\Healthy.FileSystem\bin\Debug\netstandard1.4\Healthy.FileSystem.pdb
+e:\Source\Repos\Healthy\src\Healthy.FileSystem\obj\Debug\netstandard1.4\Healthy.FileSystem.AssemblyInfo.cs
+e:\Source\Repos\Healthy\src\Healthy.FileSystem\obj\Debug\netstandard1.4\Healthy.FileSystem.dll
+e:\Source\Repos\Healthy\src\Healthy.FileSystem\obj\Debug\netstandard1.4\Healthy.FileSystem.pdb

@@ -1,0 +1,6 @@
+e:\Source\Repos\Healthy\src\Healthy.Redis\bin\Debug\netstandard1.4\Healthy.Redis.deps.json
+e:\Source\Repos\Healthy\src\Healthy.Redis\bin\Debug\netstandard1.4\Healthy.Redis.dll
+e:\Source\Repos\Healthy\src\Healthy.Redis\bin\Debug\netstandard1.4\Healthy.Redis.pdb
+e:\Source\Repos\Healthy\src\Healthy.Redis\obj\Debug\netstandard1.4\Healthy.Redis.AssemblyInfo.cs
+e:\Source\Repos\Healthy\src\Healthy.Redis\obj\Debug\netstandard1.4\Healthy.Redis.dll
+e:\Source\Repos\Healthy\src\Healthy.Redis\obj\Debug\netstandard1.4\Healthy.Redis.pdb
