@@ -22,6 +22,9 @@ namespace Healthy.SqlServer
 
         public async Task<TestResult> ExecuteAsync()
         {
+
+            System.Console.WriteLine($"Task executing {DateTime.Now}");
+
             string message = null;
             try
             {
@@ -29,7 +32,7 @@ namespace Healthy.SqlServer
                 {
                     await connection.OpenAsync();
 
-                    using(var command = connection.CreateCommand())
+                    using (var command = connection.CreateCommand())
                     {
                         command.CommandType = CommandType.Text;
                         command.CommandText = _sqlQuery;
@@ -37,8 +40,10 @@ namespace Healthy.SqlServer
                     }
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
+                message = e.ToString();
+
                 return new TestResult(TestResultStatus.Failed, message);
             }
 
