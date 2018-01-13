@@ -4,6 +4,7 @@ using Healthy.Core;
 using Healthy.Core.Engine.Tests;
 using System.Data.SqlClient;
 using System.Data;
+using System.Diagnostics;
 
 namespace Healthy.Tests.SqlServer
 {
@@ -14,18 +15,20 @@ namespace Healthy.Tests.SqlServer
         private readonly string _connectionString;
         private readonly string _sqlQuery;
 
-        public SqlTest(string connectionString, string sqlQuery = null)
+        public string TestName { get; }
+
+        public SqlTest(string testName, string connectionString, string sqlQuery = null)
         {
+            TestName = testName;
             _connectionString = connectionString;
             _sqlQuery = string.IsNullOrWhiteSpace(sqlQuery) ? DefaultSqlQuery : sqlQuery;
         }
 
         public async Task<TestResult> ExecuteAsync()
         {
-
-            System.Console.WriteLine($"Task executing {DateTime.Now}");
-
+            var sw = Stopwatch.StartNew();
             string message = null;
+            TestResult result;
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
@@ -44,10 +47,14 @@ namespace Healthy.Tests.SqlServer
             {
                 message = e.ToString();
 
-                return new TestResult(TestResultStatus.Failed, message);
+                result =  new TestResult(TestName, TestResultStatus.Failed, sw.Elapsed, message);
             }
 
-            return new TestResult(TestResultStatus.Success);
+            result = new TestResult(TestName, TestResultStatus.Success, sw.Elapsed);
+
+            sw.Stop();
+
+            return result;
         }
     }
 }

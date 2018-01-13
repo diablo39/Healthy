@@ -1,9 +1,10 @@
 using Healthy.Core.Engine.Tests;
+using System;
 
 namespace Healthy.Core.ConfigurationBuilder
 {
     public interface ITestsConfigurationBuilder
     {
-        void AddTest(string testName, ITest test);
+        void AddTest(ITest test);
     }
 }

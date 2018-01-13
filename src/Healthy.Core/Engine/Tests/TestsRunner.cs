@@ -29,7 +29,7 @@ namespace Healthy.Core.Engine.Tests
             _testResultProcessor = testResultProcessor;
         }
 
-        public void AddTest(string testName, ITest test)
+        public void AddTest(ITest test)
         {
             _tests.Add(test);
 

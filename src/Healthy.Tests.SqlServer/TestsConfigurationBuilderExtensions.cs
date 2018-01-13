@@ -11,7 +11,7 @@ namespace Healthy.Core
         ///</summary>
         public static void AddSqlServerTest(this ITestsConfigurationBuilder cfg, string testName, string connectionString)
         {
-            cfg.AddTest(testName, new SqlTest(connectionString));
+            cfg.AddTest(new SqlTest(testName, connectionString));
         }
 
         ///<summary>
@@ -19,7 +19,7 @@ namespace Healthy.Core
         ///</summary>
         public static void AddSqlServerTest(this ITestsConfigurationBuilder cfg, string testName, string connectionString, string sqlQuery)
         {
-            cfg.AddTest(testName, new SqlTest(connectionString, sqlQuery));
+            cfg.AddTest(new SqlTest(testName, connectionString, sqlQuery));
         }
     }
 }

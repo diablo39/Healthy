@@ -5,6 +5,8 @@ namespace Healthy.Core.Engine.Tests
 {
     public interface ITest
     {
+        string TestName { get;}
+
         Task<TestResult> ExecuteAsync();
     }
 }

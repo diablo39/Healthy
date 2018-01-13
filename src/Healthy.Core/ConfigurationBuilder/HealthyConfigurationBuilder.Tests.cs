@@ -9,10 +9,10 @@ namespace Healthy.Core.ConfigurationBuilder
     {
         Lazy<TestsRunner> _testRunner;
 
-        public void AddTest(string testName, ITest test)
+        public void AddTest(ITest test)
         {
             var testRunner = _testRunner.Value;
-            testRunner.AddTest(testName, test);
+            testRunner.AddTest(test);
         }
     }
 }
