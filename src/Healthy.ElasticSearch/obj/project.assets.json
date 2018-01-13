@@ -62,6 +62,18 @@
           "lib/netstandard1.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
         }
       },
+      "Microsoft.Extensions.Logging.Abstractions/1.1.2": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        }
+      },
       "Microsoft.Extensions.Primitives/1.1.1": {
         "type": "package",
         "dependencies": {
@@ -1361,13 +1373,8 @@
         "dependencies": {
           "Microsoft.AspNetCore.Http.Abstractions": "1.1.2",
           "Microsoft.Extensions.DependencyInjection": "1.1.1",
+          "Microsoft.Extensions.Logging.Abstractions": "1.1.2",
           "NETStandard.Library": "1.6.1"
-        },
-        "compile": {
-          "bin/placeholder/netstandard1.6/Healthy.Core.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/netstandard1.6/Healthy.Core.dll": {}
         }
       }
     }
@@ -1419,6 +1426,17 @@
         "lib/netstandard1.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
         "microsoft.extensions.dependencyinjection.abstractions.1.1.1.nupkg.sha512",
         "microsoft.extensions.dependencyinjection.abstractions.nuspec"
+      ]
+    },
+    "Microsoft.Extensions.Logging.Abstractions/1.1.2": {
+      "sha512": "2YOeGMOGTVXyqLbDibs44kr7cvxx/efyhnprxSOZIH0rhTorkP8Gx9tkoKpH7OJ1cOtqH0Dl8MH6+dILCtNzmQ==",
+      "type": "package",
+      "path": "microsoft.extensions.logging.abstractions/1.1.2",
+      "files": [
+        "lib/netstandard1.1/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/netstandard1.1/Microsoft.Extensions.Logging.Abstractions.xml",
+        "microsoft.extensions.logging.abstractions.1.1.2.nupkg.sha512",
+        "microsoft.extensions.logging.abstractions.nuspec"
       ]
     },
     "Microsoft.Extensions.Primitives/1.1.1": {
@@ -4795,9 +4813,6 @@
       "originalTargetFrameworks": [
         "netstandard1.6"
       ],
-      "files": {
-        "lib/netstandard1.6/Healthy.ElasticSearch.dll": "E:\\Source\\Repos\\Healthy\\src\\Healthy.ElasticSearch\\bin\\placeholder\\netstandard1.6\\Healthy.ElasticSearch.dll"
-      },
       "frameworks": {
         "netstandard1.6": {
           "projectReferences": {
@@ -4813,7 +4828,8 @@
         "dependencies": {
           "NETStandard.Library": {
             "target": "Package",
-            "version": "1.6.1"
+            "version": "1.6.1",
+            "autoReferenced": true
           }
         }
       }

@@ -1,10 +1,12 @@
 using System;
 using Microsoft.AspNetCore.Builder;
 using Healthy.Core.Engine;
+using Healthy.Core.Engine.Tests;
 
 namespace Healthy.Core.ConfigurationBuilder
 {
-    internal class HealthyConfigurationBuilder: IHealthyConfigurationBuilder, IOutputConfigurationBuilder, ITestsConfigurationBuilder // split into interfaces
+    internal partial class HealthyConfigurationBuilder: 
+        IHealthyConfigurationBuilder, IOutputConfigurationBuilder, ITestsConfigurationBuilder, IMetricsConfigurationBuilder // split into interfaces
     {
         private readonly HealthyEngine _engine;
 
@@ -13,6 +15,7 @@ namespace Healthy.Core.ConfigurationBuilder
         public HealthyConfigurationBuilder(HealthyEngine engine)
         {
             _engine = engine;
+            _testRunner = new Lazy<TestsRunner>(() => _engine.GetService<TestsRunner>());
         }
 
         public IHealthyConfigurationBuilder ConfigureTests(Action<ITestsConfigurationBuilder> builder)
@@ -27,24 +30,10 @@ namespace Healthy.Core.ConfigurationBuilder
             return this;
         }
 
-        public void AddTest(string testName, ITest test)
+        public IHealthyConfigurationBuilder ConfigureMetrics(Action<IMetricsConfigurationBuilder> builder)
         {
-            _engine.AddTest(testName, test);
-        }
-
-        public void AddHttpPanel(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddHealthCheckUrl(string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddHeartBeat(string url, int interval, string method, bool sendWhenTestFails = false)
-        {
-            throw new NotImplementedException();
+            builder(this);
+            return this;
         }
     }
 }

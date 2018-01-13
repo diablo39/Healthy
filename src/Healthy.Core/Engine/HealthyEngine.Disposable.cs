@@ -6,7 +6,7 @@ using System.Collections.Concurrent;
 
 namespace Healthy.Core.Engine
 {
-    public partial class HealthyEngine : IDisposable
+    partial class HealthyEngine : IDisposable
     {
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -17,12 +17,10 @@ namespace Healthy.Core.Engine
             {
                 if (disposing)
                 {
-                    for (int i = 0; i < _timers.Count; i++)
+                    foreach (var service in _services)
                     {
-                        _timers[i].Dispose();
+                        service.Dispose();
                     }
-
-                    _timers.Clear();
                     // TODO: dispose managed state (managed objects).
                 }
 
@@ -30,7 +28,7 @@ namespace Healthy.Core.Engine
                 // TODO: set large fields to null.
 
                 disposedValue = true;
-                _isRunning = false;
+
             }
         }
 

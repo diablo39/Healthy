@@ -16,5 +16,10 @@ namespace Healthy.Core.Engine.Tests
             Status = status;
             Message = message;
         }
+
+        public override string ToString()
+        {
+            return $"Status: { Status } Message: { Message }";
+        }
     }
 }

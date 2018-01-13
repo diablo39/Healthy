@@ -7,5 +7,7 @@ namespace Healthy.Core.ConfigurationBuilder
         IHealthyConfigurationBuilder ConfigureTests(Action<ITestsConfigurationBuilder> builder);
 
         IHealthyConfigurationBuilder ConfigureOutputs(Action<IOutputConfigurationBuilder> builder);
+        
+        IHealthyConfigurationBuilder ConfigureMetrics(Action<IMetricsConfigurationBuilder> builder);
     }
 }

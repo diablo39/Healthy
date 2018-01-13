@@ -58,6 +58,9 @@ namespace Healthy.SampleApplication
                 //o.AddHealthCheckUrl("/_health"); // enpoint that can be monitored by haproxy, checks 
                 //o.AddWebHook("uri", Formatters.Json, TestStatus); // web hook after test run 
                 //o.AddHeartBeat("url", 15, "GET", true); // ping page if all tests pass
+            })
+            .ConfigureMetrics(o => {
+
             })); // add monitors - based on http responses, windows counters, etc...
 
             app.Run(async (context) =>

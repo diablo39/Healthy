@@ -14,7 +14,7 @@ namespace Healthy.Core
 
             cfg(configurationBuilder);
 
-            healthyEngine.Run();
+            healthyEngine.Start();
         }
     }
 }

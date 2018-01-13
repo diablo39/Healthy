@@ -3,64 +3,47 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Concurrent;
+using Microsoft.Extensions.Logging;
+using System.Linq;
+using Healthy.Core.Engine.Tests;
 
 namespace Healthy.Core.Engine
 {
-    public partial class HealthyEngine
+    internal partial class HealthyEngine : IService
     {
-        private TimeSpan _defaultTestInterval = TimeSpan.FromSeconds(15);
+        private readonly ILogger<HealthyEngine> _logger;
+        private readonly ILoggerFactory _loggerFactory;
 
-        private bool _isRunning = false;
+        private ConcurrentBag<IService> _services = new ConcurrentBag<IService>();
 
-        private List<Timer> _timers = new List<Timer>();
-
-        private List<ITest> _tests = new List<ITest>();
-
-        public IEnumerable<ITest> Tests => _tests.AsReadOnly();
-
-        public void AddTest(string testName, ITest test)
+        public HealthyEngine(ILoggerFactory loggerFactory)
         {
-            _tests.Add(test);
+            _loggerFactory = loggerFactory;
+            _logger = loggerFactory.CreateLogger<HealthyEngine>();
+            _services.Add(new TestsRunner(loggerFactory.CreateLogger<TestsRunner>()));
+        }
 
-            if (_isRunning)
+        public void Start()
+        {
+            foreach (var service in _services)
             {
-                RunTest(test);
+                service.Start();
             }
         }
 
-        public void SetDefaultTestInterval(int interval)
+        public void Stop()
         {
-
-        }
-
-        public void SetDefaultTestInterval(TimeSpan interval)
-        {
-
-        }
-
-        internal void Run()
-        {
-            // TODO: set Timer
-            for (int i = 0; i < _tests.Count; i++)
+            foreach (var service in _services)
             {
-                var test = _tests[i];
-                RunTest(test);
+                service.Stop();
             }
         }
 
-        private void RunTest(ITest test)
+        public T GetService<T>()
+            where T : IService
         {
-            lock (_timers)
-            {
-                var timer = new Timer(async o => { await ExecuteTest((ITest)o); }, test, TimeSpan.FromSeconds(0), _defaultTestInterval);
-                _timers.Add(timer);
-            }
-        }
-
-        private async Task ExecuteTest(ITest test)
-        {
-            var result = await test.ExecuteAsync();
-            // store result
+            var result = _services.OfType<T>().FirstOrDefault();
+            return result;
         }
     }
 }
