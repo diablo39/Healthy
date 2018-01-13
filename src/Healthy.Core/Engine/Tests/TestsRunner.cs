@@ -91,9 +91,8 @@ namespace Healthy.Core.Engine.Tests
         private async Task ExecuteTest(ITest test)
         {
             var result = await test.ExecuteAsync();
-            
-            if(_testResultProcessor != null)
-                _testResultProcessor(result);
+
+            _testResultProcessor?.Invoke(result);
 
             _logger.LogInformation(result.ToString());
         }
