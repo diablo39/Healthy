@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace Healthy.Core.Engine.HealthChecks
 {
-    partial class HealthCheckRunner : IDisposable, IObservable<HealthCheckResult>
+    partial class HealthCheckController : IDisposable, IObservable<HealthCheckResult>
     {
         private static Random _rnd = new Random((int)(DateTime.Now.Ticks % int.MaxValue));
         private readonly IHealthCheck _healthCheck;
         private Timer _timer;
         private TimeSpan _interval;
-        private readonly ILogger<HealthCheckRunner> _logger;
+        private readonly ILogger<HealthCheckController> _logger;
 
         internal IList<IObserver<HealthCheckResult>> _observers = new List<IObserver<HealthCheckResult>>(); // TODO: to thread safe collection
 
-        public HealthCheckRunner(IHealthCheck healthCheck, TimeSpan interval, ILogger<HealthCheckRunner> logger)
+        public HealthCheckController(IHealthCheck healthCheck, TimeSpan interval, ILogger<HealthCheckController> logger)
         {
             _healthCheck = healthCheck;
             _interval = interval;

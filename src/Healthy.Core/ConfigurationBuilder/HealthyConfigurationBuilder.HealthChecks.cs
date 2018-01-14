@@ -6,7 +6,7 @@ namespace Healthy.Core.ConfigurationBuilder
 {
     internal partial class HealthyConfigurationBuilder
     {
-        private Lazy<HealthChecksRunnerService> _healthChecksRunnerServiceAccessor;
+        private Lazy<HealthCheckService> _healthChecksRunnerServiceAccessor;
 
         public IHealthCheckConfigurator AddHealthCheck(IHealthCheck healthCheck)
         {
@@ -20,22 +20,6 @@ namespace Healthy.Core.ConfigurationBuilder
         {
             var healthChecksRunnerService = _healthChecksRunnerServiceAccessor.Value;
             healthChecksRunnerService.SetDefaultHealthCheckInterval(timeSpan);
-        }
-
-        public void AddHealthCheckResultStorage(IHeatlCheckResultStorage healthCheckResultStorage)
-        {
-            var healthCheckRunnerService = _healthChecksRunnerServiceAccessor.Value;
-
-            healthCheckResultStorage.Save(healthCheckRunnerService.HealthCheckResults);
-        }
-
-        public void RegisterHealthCheckResultProcessor(Action<HealthCheckResult> processor)
-        {
-            var healthChecksRunnerService = _healthChecksRunnerServiceAccessor.Value;
-
-            var observer = new DelegatedObserver<HealthCheckResult>(processor);
-
-            healthChecksRunnerService.HealthCheckResults.Subscribe(observer);
         }
     }
 }

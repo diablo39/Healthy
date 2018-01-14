@@ -27,8 +27,7 @@ namespace Healthy.HealthChecks.SqlServer
         public async Task<HealthCheckResult> ExecuteAsync()
         {
             var sw = Stopwatch.StartNew();
-            string message = null;
-            HealthCheckResult result;
+
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
@@ -42,19 +41,17 @@ namespace Healthy.HealthChecks.SqlServer
                         await command.ExecuteNonQueryAsync();
                     }
                 }
+
+                return new HealthCheckResult(Name, HealthCheckResultStatus.Success, sw.Elapsed);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                message = e.ToString();
-
-                result =  new HealthCheckResult(Name, HealthCheckResultStatus.Failed, sw.Elapsed, message);
+                return new HealthCheckResult(Name, HealthCheckResultStatus.Failed, sw.Elapsed, e.Message);
             }
-
-            result = new HealthCheckResult(Name, HealthCheckResultStatus.Success, sw.Elapsed);
-
-            sw.Stop();
-
-            return result;
+            finally
+            {
+                sw.Stop();
+            }
         }
     }
 }

@@ -7,9 +7,9 @@ namespace Healthy.Core.ConfigurationBuilder
 {
     class HealthCheckConfigurator : IHealthCheckConfigurator
     {
-        private HealthCheckRunner _healthCheckRunner;
+        private HealthCheckController _healthCheckRunner;
 
-        public HealthCheckConfigurator(HealthCheckRunner healthCheckRunner)
+        public HealthCheckConfigurator(HealthCheckController healthCheckRunner)
         {
             _healthCheckRunner = healthCheckRunner;
         }
@@ -34,6 +34,11 @@ namespace Healthy.Core.ConfigurationBuilder
         {
             _healthCheckRunner.SetHealthCheckInterval(TimeSpan.FromSeconds(seconds));
             return this;
-        } 
+        }
+
+        public IDisposable Subscribe(IObserver<HealthCheckResult> observer)
+        {
+            return _healthCheckRunner.Subscribe(observer);
+        }
     }
 }

@@ -8,33 +8,24 @@ using System.Threading.Tasks;
 
 namespace Healthy.Core.Engine.HealthChecks
 {
-    class HealthChecksRunnerService : IService
+    class HealthCheckService : IService
     {
         private TimeSpan _defaultHealthCheckInterval = TimeSpan.FromSeconds(15);
 
-        private ConcurrentBag<HealthCheckRunner> _healthCheckRunners = new ConcurrentBag<HealthCheckRunner>();
+        private ConcurrentBag<HealthCheckController> _healthCheckRunners = new ConcurrentBag<HealthCheckController>();
 
         private bool _isRunning = false;
 
         private readonly ILoggerFactory _loggerFactory;
 
-        private readonly HealthCheckResultProcessor _healthCheckResultProcessor;
-
-        private HealthCheckResultObserver _observer;
-
-        internal IObservable<HealthCheckResult> HealthCheckResults { get => _observer; }
-
-        public HealthChecksRunnerService(ILoggerFactory loggerFactory, HealthCheckResultProcessor healthCheckResultProcessor)
+        public HealthCheckService(ILoggerFactory loggerFactory)
         {
             _loggerFactory = loggerFactory;
-            _healthCheckResultProcessor = healthCheckResultProcessor;
-            _observer = new HealthCheckResultObserver();
         }
 
-        public HealthCheckRunner AddHealthCheck(IHealthCheck healthCheck)
+        public HealthCheckController AddHealthCheck(IHealthCheck healthCheck)
         {
-            var healthCheckRunner = new HealthCheckRunner(healthCheck, _defaultHealthCheckInterval, _loggerFactory.CreateLogger<HealthCheckRunner>());
-            healthCheckRunner.Subscribe(_observer);
+            var healthCheckRunner = new HealthCheckController(healthCheck, _defaultHealthCheckInterval, _loggerFactory.CreateLogger<HealthCheckController>());
             _healthCheckRunners.Add(healthCheckRunner);
 
             if (_isRunning)
@@ -82,7 +73,7 @@ namespace Healthy.Core.Engine.HealthChecks
         public void Dispose()
         {
             _isRunning = false;
-            HealthCheckRunner healthCheckRunner = null;
+            HealthCheckController healthCheckRunner = null;
             while (_healthCheckRunners.TryTake(out healthCheckRunner))
             {
                 healthCheckRunner.Dispose();

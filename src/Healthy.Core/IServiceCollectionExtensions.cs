@@ -9,10 +9,8 @@ namespace Healthy.Core
     {
         public static void AddHealthy(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddTransient<HealthCheckResultProcessor, HealthCheckResultProcessorAggregator>();
-            serviceCollection.AddTransient<HealthChecksRunnerService>();
+            serviceCollection.AddTransient<HealthCheckService>();
             serviceCollection.AddSingleton<HealthyEngine>();
-            serviceCollection.AddSingleton<HealthCheckResultProcessor, HealthCheckResultProcessorAggregator>();
         }
     }
 }

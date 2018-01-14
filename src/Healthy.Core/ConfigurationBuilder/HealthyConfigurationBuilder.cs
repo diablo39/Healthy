@@ -12,7 +12,7 @@ namespace Healthy.Core.ConfigurationBuilder
         public HealthyConfigurationBuilder(HealthyEngine engine)
         {
             _engine = engine;
-            _healthChecksRunnerServiceAccessor = new Lazy<HealthChecksRunnerService>(() => _engine.GetService<HealthChecksRunnerService>());
+            _healthChecksRunnerServiceAccessor = new Lazy<HealthCheckService>(() => _engine.GetService<HealthCheckService>());
         }
 
         public IHealthyConfigurationBuilder ConfigureHealthChecks(Action<IHealthChecksConfigurationBuilder> builder)

@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Healthy.Core.Engine.HealthChecks
 {
-    partial class HealthCheckRunner
+    partial class HealthCheckController
     {
         private class Unsubscriber : IDisposable
         {
-            private HealthCheckRunner _healthCheckRunner;
+            private HealthCheckController _healthCheckRunner;
             private IObserver<HealthCheckResult> _observer;
 
-            public Unsubscriber(HealthCheckRunner healthCheckRunner, IObserver<HealthCheckResult> observer)
+            public Unsubscriber(HealthCheckController healthCheckRunner, IObserver<HealthCheckResult> observer)
             {
                 _healthCheckRunner = healthCheckRunner;
                 _observer = observer;
@@ -43,7 +43,7 @@ namespace Healthy.Core.Engine.HealthChecks
             internal Predicate<string> IsEnabled1Arg;
             internal Func<string, object, object, bool> IsEnabled3Arg;
 
-            internal HealthCheckRunner Owner;          // The DiagnosticListener this is a subscription for.  
+            internal HealthCheckController Owner;          // The DiagnosticListener this is a subscription for.  
             internal DiagnosticSubscription Next;                // Linked list of subscribers
 
             public void Dispose()

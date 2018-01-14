@@ -8,9 +8,5 @@ namespace Healthy.Core.ConfigurationBuilder
         IHealthCheckConfigurator AddHealthCheck(IHealthCheck healthCheck);
 
         void SetDefaultHealthCheckInterval(TimeSpan timeSpan);
-
-        void AddHealthCheckResultStorage(IHeatlCheckResultStorage healthCheckResultStorage);
-
-        void RegisterHealthCheckResultProcessor(Action<HealthCheckResult> processor);
     }
 }

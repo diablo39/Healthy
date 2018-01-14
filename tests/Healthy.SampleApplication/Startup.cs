@@ -42,15 +42,11 @@ namespace Healthy.SampleApplication
                     checks.SetDefaultHealthCheckInterval(TimeSpan.FromSeconds(15)); // by default run each health check every 15 seconds
 
                     checks.AddSqlServerHealthCheck("name of sql health check", sqlConnectionString)
-                            .RunEvery(TimeSpan.FromSeconds(10))
-                            .AddTag("my tag")
-                            .AddTags("tag1", "tag2");
+                            .RunEvery(TimeSpan.FromSeconds(10));
 
                     checks.AddSqlServerHealthCheck("Name of sql health check with query", sqlConnectionString, sqlQuery)
                             .RunEvery(7);
 
-                    checks.AddHealthCheckResultStorage((IHeatlCheckResultStorage)null);
-                    checks.RegisterHealthCheckResultProcessor(e => Console.WriteLine(e.ToString()));
                 })
                 .ConfigureOutputs(o =>
                 {

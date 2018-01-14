@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Healthy.Core.Engine.HealthChecks
 {
-    partial class HealthCheckRunner
+    partial class HealthCheckController
     {
-        #region IDisposable Support
         private bool _disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
@@ -34,6 +33,5 @@ namespace Healthy.Core.Engine.HealthChecks
         {
             Dispose(true);
         }
-        #endregion
     }
 }
