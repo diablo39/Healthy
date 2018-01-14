@@ -8,3 +8,7 @@
 - WebPing
 - FileSystem
 - Network Connectivity
+
+## Outputh
+- pasive - health page
+- active - hearbeat, web hook

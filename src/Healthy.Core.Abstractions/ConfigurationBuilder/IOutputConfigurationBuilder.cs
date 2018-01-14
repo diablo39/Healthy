@@ -5,7 +5,5 @@ namespace Healthy.Core.ConfigurationBuilder
         void AddHttpPanel(string path);
 
         void AddHealthCheckUrl(string path);
-
-        void AddHeartBeat(string url, int interval, string method, bool sendWhenTestFails = false);
     }
 }

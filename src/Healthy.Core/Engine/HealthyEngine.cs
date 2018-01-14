@@ -5,7 +5,7 @@ using System.Threading;
 using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
 using System.Linq;
-using Healthy.Core.Engine.Tests;
+using Healthy.Core.Engine.HealthChecks;
 
 namespace Healthy.Core.Engine
 {

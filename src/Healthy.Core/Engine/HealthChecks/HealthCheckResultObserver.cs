@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Healthy.Core.Engine.Tests
+namespace Healthy.Core.Engine.HealthChecks
 {
-    class TestResultObserver : IObserver<TestResult>, IObservable<TestResult>
+    class HealthCheckResultObserver : IObserver<HealthCheckResult>, IObservable<HealthCheckResult>
     {
         public void OnCompleted()
         {
@@ -16,12 +16,12 @@ namespace Healthy.Core.Engine.Tests
             Console.WriteLine("Error");
         }
 
-        public void OnNext(TestResult value)
+        public void OnNext(HealthCheckResult value)
         {
             Console.WriteLine("Observer!");
         }
 
-        public IDisposable Subscribe(IObserver<TestResult> observer)
+        public IDisposable Subscribe(IObserver<HealthCheckResult> observer)
         {
             throw new NotImplementedException();
         }

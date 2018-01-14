@@ -6,27 +6,27 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Healthy.Core.Engine.Tests
+namespace Healthy.Core.Engine.HealthChecks
 {
-    partial class TestRunner
+    partial class HealthCheckRunner
     {
         private class Unsubscriber : IDisposable
         {
-            private TestRunner _testRunner;
-            private IObserver<TestResult> _observer;
+            private HealthCheckRunner _healthCheckRunner;
+            private IObserver<HealthCheckResult> _observer;
 
-            public Unsubscriber(TestRunner testRunner, IObserver<TestResult> observer)
+            public Unsubscriber(HealthCheckRunner healthCheckRunner, IObserver<HealthCheckResult> observer)
             {
-                _testRunner = testRunner;
+                _healthCheckRunner = healthCheckRunner;
                 _observer = observer;
             }
 
             public void Dispose()
             {
-                if (_testRunner != null && _observer != null && _testRunner._observers.Contains(_observer))
-                    _testRunner._observers.Remove(_observer);
+                if (_healthCheckRunner != null && _observer != null && _healthCheckRunner._observers.Contains(_observer))
+                    _healthCheckRunner._observers.Remove(_observer);
 
-                _testRunner = null;
+                _healthCheckRunner = null;
                 _observer = null;
             }
         }
@@ -43,7 +43,7 @@ namespace Healthy.Core.Engine.Tests
             internal Predicate<string> IsEnabled1Arg;
             internal Func<string, object, object, bool> IsEnabled3Arg;
 
-            internal TestRunner Owner;          // The DiagnosticListener this is a subscription for.  
+            internal HealthCheckRunner Owner;          // The DiagnosticListener this is a subscription for.  
             internal DiagnosticSubscription Next;                // Linked list of subscribers
 
             public void Dispose()

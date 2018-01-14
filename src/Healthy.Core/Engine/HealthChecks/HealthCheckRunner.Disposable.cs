@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Healthy.Core.Engine.Tests
+namespace Healthy.Core.Engine.HealthChecks
 {
-    partial class TestRunner
+    partial class HealthCheckRunner
     {
         #region IDisposable Support
         private bool _disposedValue = false; // To detect redundant calls

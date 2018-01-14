@@ -37,46 +37,25 @@ namespace Healthy.SampleApplication
             var sqlQuery = "select 1";
 
             app.UseHealthy(cfg => // set backend for healthy, allow custom repository. InMemory stores only last execution
-                cfg.ConfigureTests(tests =>
+                cfg.ConfigureHealthChecks(checks =>
                 {
-                    tests.SetDefaultTestInterval(TimeSpan.FromSeconds(15)); // by default run each test every 15 seconds
+                    checks.SetDefaultHealthCheckInterval(TimeSpan.FromSeconds(15)); // by default run each health check every 15 seconds
 
-                    tests.AddSqlServerTest("name of sql test", sqlConnectionString)
+                    checks.AddSqlServerHealthCheck("name of sql health check", sqlConnectionString)
                             .RunEvery(TimeSpan.FromSeconds(10))
-                            .AddTag("test tag")
-                            .AddTags("test", "test");
+                            .AddTag("my tag")
+                            .AddTags("tag1", "tag2");
 
-                    tests.AddSqlServerTest("Name of sql test with query", sqlConnectionString, sqlQuery)
+                    checks.AddSqlServerHealthCheck("Name of sql health check with query", sqlConnectionString, sqlQuery)
                             .RunEvery(7);
 
-                    #region new features
-
-                    //tests.AddRedisTest("name of test", resisConnectionString).RunEvery(TimeSpan | int) seconds*/;
-                    //tests.AddRedisTest("name of test", resisConnectionString, redisTestConfiguration => { });
-                    //tests.AddRedisTest("name of test", resisConnectionString, new RedisTest()); // custom redis tester. Have access to StaskExchange.Redis
-
-
-                    //tests.AddFileSystemTest("name of test", fileSystemTestConfiguration => { });
-
-                    // tests.AddWebTest("name of test", "url"); //GET
-                    // tests.AddWebTest("name of test", "url", "POST", "BODY"); //POST
-                    #endregion
-
-                    tests.AddTestResultStorage((ITestResultStorage)null);
-                    tests.RegisterTestResultProcessor(e => Console.WriteLine(e.ToString()));
+                    checks.AddHealthCheckResultStorage((IHeatlCheckResultStorage)null);
+                    checks.RegisterHealthCheckResultProcessor(e => Console.WriteLine(e.ToString()));
                 })
                 .ConfigureOutputs(o =>
                 {
-                    //o.AddHttpPanel("/path/to/output"); // good looking page with statistics
                     o.AddHealthCheckUrl("/_health"); // enpoint that can be monitored by haproxy, checks 
-                    //o.AddWebHook("uri", Formatters.Json, TestStatus); // web hook after test run 
-                    //o.AddHeartBeat("url", 15, "GET", true); // ping page if all tests pass
                 })
-                .ConfigureMetrics(o =>
-                {
-                    // add monitors - based on http responses, windows counters, etc...
-                })
-
             );
 
             app.Run(async (context) =>

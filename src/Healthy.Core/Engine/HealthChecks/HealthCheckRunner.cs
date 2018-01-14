@@ -5,24 +5,24 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Healthy.Core.Engine.Tests
+namespace Healthy.Core.Engine.HealthChecks
 {
-    partial class TestRunner : IDisposable, IObservable<TestResult>
+    partial class HealthCheckRunner : IDisposable, IObservable<HealthCheckResult>
     {
         private static Random _rnd = new Random((int)(DateTime.Now.Ticks % int.MaxValue));
-        private readonly ITest _test;
+        private readonly IHealthCheck _healthCheck;
         private Timer _timer;
         private TimeSpan _interval;
-        private readonly ILogger<TestRunner> _logger;
+        private readonly ILogger<HealthCheckRunner> _logger;
 
-        internal IList<IObserver<TestResult>> _observers = new List<IObserver<TestResult>>(); // TODO: to thread safe collection
+        internal IList<IObserver<HealthCheckResult>> _observers = new List<IObserver<HealthCheckResult>>(); // TODO: to thread safe collection
 
-        public TestRunner(ITest test, TimeSpan interval, ILogger<TestRunner> logger)
+        public HealthCheckRunner(IHealthCheck healthCheck, TimeSpan interval, ILogger<HealthCheckRunner> logger)
         {
-            _test = test;
+            _healthCheck = healthCheck;
             _interval = interval;
             _logger = logger;
-            _timer = new Timer(async o => { await ExecuteTestAsync((ITest)o); }, _test, Timeout.InfiniteTimeSpan, _interval);
+            _timer = new Timer(async o => { await ExecuteHealthCheckAsync((IHealthCheck)o); }, _healthCheck, Timeout.InfiniteTimeSpan, _interval);
         }
 
         public void Start()
@@ -31,7 +31,7 @@ namespace Healthy.Core.Engine.Tests
             var delayTimeSpan = TimeSpan.FromMilliseconds(delay);
             _timer.Change(delayTimeSpan, _interval);
 
-            _logger.LogInformation("Started test: {0}, with interval: {1}", _test.TestName, _interval);
+            _logger.LogInformation("Started health check: {0}, with interval: {1}", _healthCheck.Name, _interval);
         }
 
         public void Stop()
@@ -41,12 +41,12 @@ namespace Healthy.Core.Engine.Tests
             Parallel.For(0, _observers.Count, i => _observers[i].OnCompleted());
         }
 
-        public void SetTestingInterval(TimeSpan interval)
+        public void SetHealthCheckInterval(TimeSpan interval)
         {
             _interval = interval;
         }
 
-        public IDisposable Subscribe(IObserver<TestResult> observer)
+        public IDisposable Subscribe(IObserver<HealthCheckResult> observer)
         {
             if (!_observers.Contains(observer))
                 _observers.Add(observer);
@@ -54,11 +54,11 @@ namespace Healthy.Core.Engine.Tests
             return new Unsubscriber(this, observer);
         }
 
-        private async Task ExecuteTestAsync(ITest test)
+        private async Task ExecuteHealthCheckAsync(IHealthCheck healthCheck)
         {
             try
             {
-                var result = await test.ExecuteAsync();
+                var result = await healthCheck.ExecuteAsync();
 
                 _logger.LogInformation(result.ToString());
 

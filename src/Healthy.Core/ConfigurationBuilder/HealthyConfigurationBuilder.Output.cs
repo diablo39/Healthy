@@ -14,10 +14,5 @@ namespace Healthy.Core.ConfigurationBuilder
         {
             throw new NotImplementedException();
         }
-
-        public void AddHeartBeat(string url, int interval, string method, bool sendWhenTestFails = false)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

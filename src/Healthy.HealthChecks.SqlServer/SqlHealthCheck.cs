@@ -1,34 +1,34 @@
 using System;
 using System.Threading.Tasks;
 using Healthy.Core;
-using Healthy.Core.Engine.Tests;
+using Healthy.Core.Engine.HealthChecks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Diagnostics;
 
-namespace Healthy.Tests.SqlServer
+namespace Healthy.HealthChecks.SqlServer
 {
-    internal class SqlTest : ITest
+    internal class SqlHealthCheck : IHealthCheck
     {
         private const string DefaultSqlQuery = "select 1;";
 
         private readonly string _connectionString;
         private readonly string _sqlQuery;
 
-        public string TestName { get; }
+        public string Name { get; }
 
-        public SqlTest(string testName, string connectionString, string sqlQuery = null)
+        public SqlHealthCheck(string name, string connectionString, string sqlQuery = null)
         {
-            TestName = testName;
+            Name = name;
             _connectionString = connectionString;
             _sqlQuery = string.IsNullOrWhiteSpace(sqlQuery) ? DefaultSqlQuery : sqlQuery;
         }
 
-        public async Task<TestResult> ExecuteAsync()
+        public async Task<HealthCheckResult> ExecuteAsync()
         {
             var sw = Stopwatch.StartNew();
             string message = null;
-            TestResult result;
+            HealthCheckResult result;
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
@@ -47,10 +47,10 @@ namespace Healthy.Tests.SqlServer
             {
                 message = e.ToString();
 
-                result =  new TestResult(TestName, TestResultStatus.Failed, sw.Elapsed, message);
+                result =  new HealthCheckResult(Name, HealthCheckResultStatus.Failed, sw.Elapsed, message);
             }
 
-            result = new TestResult(TestName, TestResultStatus.Success, sw.Elapsed);
+            result = new HealthCheckResult(Name, HealthCheckResultStatus.Success, sw.Elapsed);
 
             sw.Stop();
 

@@ -15,8 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Healthy.Core\Healthy.Core.csproj" />
-    <ProjectReference Include="..\..\src\Healthy.Tests.SqlServer\Healthy.Tests.SqlServer.csproj" />
+    <ProjectReference Include="..\..\src\Healthy.HealthChecks.SqlServer\Healthy.HealthChecks.SqlServer.csproj" />
   </ItemGroup>
 
 </Project>

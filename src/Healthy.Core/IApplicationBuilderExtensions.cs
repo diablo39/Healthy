@@ -1,7 +1,7 @@
 ﻿using System;
 using Healthy.Core.ConfigurationBuilder;
 using Healthy.Core.Engine;
-using Healthy.Core.Engine.Tests;
+using Healthy.Core.Engine.HealthChecks;
 using Microsoft.AspNetCore.Builder;
 
 namespace Healthy.Core
@@ -12,7 +12,7 @@ namespace Healthy.Core
         {
             var healthyEngine = (HealthyEngine)app.ApplicationServices.GetService(typeof(HealthyEngine));
 
-            healthyEngine.RegisterService((TestsRunnerService)app.ApplicationServices.GetService(typeof(TestsRunnerService)));
+            healthyEngine.RegisterService((HealthChecksRunnerService)app.ApplicationServices.GetService(typeof(HealthChecksRunnerService)));
 
             var configurationBuilder = new HealthyConfigurationBuilder(healthyEngine);
 

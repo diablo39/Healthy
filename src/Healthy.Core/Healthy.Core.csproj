@@ -9,9 +9,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Engine\Metrics\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Healthy.Core.Abstractions\Healthy.Core.Abstractions.csproj" />
   </ItemGroup>
 </Project>

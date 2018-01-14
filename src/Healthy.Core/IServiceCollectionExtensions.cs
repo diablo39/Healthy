@@ -1,6 +1,6 @@
 using System;
 using Healthy.Core.Engine;
-using Healthy.Core.Engine.Tests;
+using Healthy.Core.Engine.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Healthy.Core
@@ -9,10 +9,10 @@ namespace Healthy.Core
     {
         public static void AddHealthy(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddTransient<TestResultProcessor, TestResultProcessorAggregator>();
-            serviceCollection.AddTransient<TestsRunnerService>();
+            serviceCollection.AddTransient<HealthCheckResultProcessor, HealthCheckResultProcessorAggregator>();
+            serviceCollection.AddTransient<HealthChecksRunnerService>();
             serviceCollection.AddSingleton<HealthyEngine>();
-            serviceCollection.AddSingleton<TestResultProcessor, TestResultProcessorAggregator>();
+            serviceCollection.AddSingleton<HealthCheckResultProcessor, HealthCheckResultProcessorAggregator>();
         }
     }
 }
