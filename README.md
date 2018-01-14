@@ -10,5 +10,5 @@
 - Network Connectivity
 
 ## Outputh
-- pasive - health page
+- pasive - health page, health url (json)
 - active - hearbeat, web hook
