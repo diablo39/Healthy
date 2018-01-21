@@ -12,7 +12,7 @@ namespace Healthy.Core.Engine.HealthChecks
     {
         private TimeSpan _defaultHealthCheckInterval = TimeSpan.FromSeconds(15);
 
-        private ConcurrentBag<HealthCheckController> _healthCheckRunners = new ConcurrentBag<HealthCheckController>();
+        public static ConcurrentBag<HealthCheckController> HealthCheckControllers = new ConcurrentBag<HealthCheckController>();
 
         private bool _isRunning = false;
 
@@ -25,15 +25,15 @@ namespace Healthy.Core.Engine.HealthChecks
 
         public HealthCheckController AddHealthCheck(IHealthCheck healthCheck)
         {
-            var healthCheckRunner = new HealthCheckController(healthCheck, _defaultHealthCheckInterval, _loggerFactory.CreateLogger<HealthCheckController>());
-            _healthCheckRunners.Add(healthCheckRunner);
+            var healthCheckController = new HealthCheckController(healthCheck, _defaultHealthCheckInterval, _loggerFactory.CreateLogger<HealthCheckController>());
+            HealthCheckControllers.Add(healthCheckController);
 
             if (_isRunning)
             {
-                healthCheckRunner.Start();
+                healthCheckController.Start();
             }
 
-            return healthCheckRunner;
+            return healthCheckController;
         }
 
         public void SetDefaultHealthCheckInterval(int interval)
@@ -52,7 +52,7 @@ namespace Healthy.Core.Engine.HealthChecks
 
             _isRunning = true;
 
-            foreach (var healthCheckRunner in _healthCheckRunners)
+            foreach (var healthCheckRunner in HealthCheckControllers)
             {
                 healthCheckRunner.Start();
             }
@@ -64,7 +64,7 @@ namespace Healthy.Core.Engine.HealthChecks
 
             _isRunning = false;
 
-            foreach (var healthCheckRunner in _healthCheckRunners)
+            foreach (var healthCheckRunner in HealthCheckControllers)
             {
                 healthCheckRunner.Stop();
             }
@@ -74,7 +74,7 @@ namespace Healthy.Core.Engine.HealthChecks
         {
             _isRunning = false;
             HealthCheckController healthCheckRunner = null;
-            while (_healthCheckRunners.TryTake(out healthCheckRunner))
+            while (HealthCheckControllers.TryTake(out healthCheckRunner))
             {
                 healthCheckRunner.Dispose();
             }

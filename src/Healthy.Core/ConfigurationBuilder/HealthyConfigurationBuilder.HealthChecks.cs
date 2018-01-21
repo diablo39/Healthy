@@ -6,11 +6,11 @@ namespace Healthy.Core.ConfigurationBuilder
 {
     internal partial class HealthyConfigurationBuilder
     {
-        private Lazy<HealthCheckService> _healthChecksRunnerServiceAccessor;
+        private HealthCheckService _healthChecksService;
 
         public IHealthCheckConfigurator AddHealthCheck(IHealthCheck healthCheck)
         {
-            var healthCheckRunnerService = _healthChecksRunnerServiceAccessor.Value;
+            var healthCheckRunnerService = _healthChecksService;
             var healthCheckRunner = healthCheckRunnerService.AddHealthCheck(healthCheck);
             var configurator = new HealthCheckConfigurator(healthCheckRunner);
             return configurator;
@@ -18,7 +18,7 @@ namespace Healthy.Core.ConfigurationBuilder
 
         public void SetDefaultHealthCheckInterval(TimeSpan timeSpan)
         {
-            var healthChecksRunnerService = _healthChecksRunnerServiceAccessor.Value;
+            var healthChecksRunnerService = _healthChecksService;
             healthChecksRunnerService.SetDefaultHealthCheckInterval(timeSpan);
         }
     }

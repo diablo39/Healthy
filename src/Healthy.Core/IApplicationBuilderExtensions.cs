@@ -14,7 +14,7 @@ namespace Healthy.Core
 
             healthyEngine.RegisterService((HealthCheckService)app.ApplicationServices.GetService(typeof(HealthCheckService)));
 
-            var configurationBuilder = new HealthyConfigurationBuilder(healthyEngine);
+            var configurationBuilder = new HealthyConfigurationBuilder(healthyEngine, app);
 
             cfg(configurationBuilder);
 

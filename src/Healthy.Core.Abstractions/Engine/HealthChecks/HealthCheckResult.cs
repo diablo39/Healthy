@@ -14,6 +14,8 @@ namespace Healthy.Core.Engine.HealthChecks
 
         public DateTime Moment { get; }
 
+        public Exception Exception { get; }
+
         public HealthCheckResult(string healthCheckName, HealthCheckResultStatus status, TimeSpan runningTime)
         {
             HealthCheckName = healthCheckName;
@@ -21,6 +23,7 @@ namespace Healthy.Core.Engine.HealthChecks
             Message = string.Empty;
             RunningTime = runningTime;
             Moment = DateTime.UtcNow;
+            Exception = null;
         }
 
         public HealthCheckResult(string healthCheckName, HealthCheckResultStatus status, TimeSpan runningTime, string message)
@@ -30,6 +33,7 @@ namespace Healthy.Core.Engine.HealthChecks
             Message = message;
             RunningTime = runningTime;
             Moment = DateTime.UtcNow;
+            Exception = null;
         }
 
         public override string ToString()

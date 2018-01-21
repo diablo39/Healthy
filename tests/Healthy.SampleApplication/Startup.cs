@@ -47,10 +47,12 @@ namespace Healthy.SampleApplication
                     checks.AddSqlServerHealthCheck("Name of sql health check with query", sqlConnectionString, sqlQuery)
                             .RunEvery(7);
 
+                    checks.AddHealthCheckResultStorage((IHeatlCheckResultStorage)null);
+
                 })
                 .ConfigureOutputs(o =>
                 {
-                    o.AddHealthCheckUrl("/_health"); // enpoint that can be monitored by haproxy, checks 
+                    o.AddHttpPanel("/healthy/dashboard"); // enpoint that can be monitored by haproxy, checks 
                 })
             );
 

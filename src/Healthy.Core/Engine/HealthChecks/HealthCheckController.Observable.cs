@@ -10,6 +10,14 @@ namespace Healthy.Core.Engine.HealthChecks
 {
     partial class HealthCheckController
     {
+        public IDisposable Subscribe(IObserver<HealthCheckResult> observer)
+        {
+            if (!_observers.Contains(observer))
+                _observers.Add(observer);
+
+            return new Unsubscriber(this, observer);
+        }
+
         private class Unsubscriber : IDisposable
         {
             private HealthCheckController _healthCheckRunner;
@@ -39,10 +47,6 @@ namespace Healthy.Core.Engine.HealthChecks
         {
             internal IObserver<KeyValuePair<string, object>> Observer;
 
-            
-            internal Predicate<string> IsEnabled1Arg;
-            internal Func<string, object, object, bool> IsEnabled3Arg;
-
             internal HealthCheckController Owner;          // The DiagnosticListener this is a subscription for.  
             internal DiagnosticSubscription Next;                // Linked list of subscribers
 
@@ -61,7 +65,7 @@ namespace Healthy.Core.Engine.HealthChecks
                         var cur = newSubscriptions;
                         while (cur != null)
                         {
-                            Debug.Assert(!(cur.Observer == Observer && cur.IsEnabled1Arg == IsEnabled1Arg && cur.IsEnabled3Arg == IsEnabled3Arg), "Did not remove subscription!");
+                            Debug.Assert(!(cur.Observer == Observer), "Did not remove subscription!");
                             cur = cur.Next;
                         }
 #endif
@@ -79,16 +83,14 @@ namespace Healthy.Core.Engine.HealthChecks
                     return null;
                 }
 
-                if (subscriptions.Observer == subscription.Observer &&
-                    subscriptions.IsEnabled1Arg == subscription.IsEnabled1Arg &&
-                    subscriptions.IsEnabled3Arg == subscription.IsEnabled3Arg)
+                if (subscriptions.Observer == subscription.Observer)
                     return subscriptions.Next;
 #if DEBUG
                 // Delay a bit.  This makes it more likely that races will happen. 
                 for (int i = 0; i < 100; i++)
                     GC.KeepAlive("");
 #endif
-                return new DiagnosticSubscription() { Observer = subscriptions.Observer, Owner = subscriptions.Owner, IsEnabled1Arg = subscriptions.IsEnabled1Arg, IsEnabled3Arg = subscriptions.IsEnabled3Arg, Next = Remove(subscriptions.Next, subscription) };
+                return new DiagnosticSubscription() { Observer = subscriptions.Observer, Owner = subscriptions.Owner, Next = Remove(subscriptions.Next, subscription) };
             }
         }
     }

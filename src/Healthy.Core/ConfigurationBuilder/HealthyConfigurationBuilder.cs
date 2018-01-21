@@ -1,6 +1,7 @@
 using System;
 using Healthy.Core.Engine;
 using Healthy.Core.Engine.HealthChecks;
+using Microsoft.AspNetCore.Builder;
 
 namespace Healthy.Core.ConfigurationBuilder
 {
@@ -8,11 +9,13 @@ namespace Healthy.Core.ConfigurationBuilder
         IHealthyConfigurationBuilder, IOutputConfigurationBuilder, IHealthChecksConfigurationBuilder // split into interfaces
     {
         private readonly HealthyEngine _engine;
+        private readonly IApplicationBuilder _appBuilder;
 
-        public HealthyConfigurationBuilder(HealthyEngine engine)
+        public HealthyConfigurationBuilder(HealthyEngine engine, IApplicationBuilder appBuilder)
         {
             _engine = engine;
-            _healthChecksRunnerServiceAccessor = new Lazy<HealthCheckService>(() => _engine.GetService<HealthCheckService>());
+            this._appBuilder = appBuilder;
+            _healthChecksService = _engine.GetService<HealthCheckService>();
         }
 
         public IHealthyConfigurationBuilder ConfigureHealthChecks(Action<IHealthChecksConfigurationBuilder> builder)

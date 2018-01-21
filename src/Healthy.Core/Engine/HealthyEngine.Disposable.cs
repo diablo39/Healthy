@@ -8,7 +8,6 @@ namespace Healthy.Core.Engine
 {
     partial class HealthyEngine : IDisposable
     {
-        #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
@@ -46,6 +45,5 @@ namespace Healthy.Core.Engine
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
-        #endregion
     }
 }

@@ -46,14 +46,6 @@ namespace Healthy.Core.Engine.HealthChecks
             _interval = interval;
         }
 
-        public IDisposable Subscribe(IObserver<HealthCheckResult> observer)
-        {
-            if (!_observers.Contains(observer))
-                _observers.Add(observer);
-
-            return new Unsubscriber(this, observer);
-        }
-
         private async Task ExecuteHealthCheckAsync(IHealthCheck healthCheck)
         {
             try

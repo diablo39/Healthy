@@ -9,18 +9,19 @@ using Healthy.Core.Engine.HealthChecks;
 
 namespace Healthy.Core.Engine
 {
-    internal partial class HealthyEngine : IService
+    internal partial class HealthyEngine : IHealthyEngine, IService
     {
         private readonly ILogger<HealthyEngine> _logger;
         private readonly ILoggerFactory _loggerFactory;
 
         private ConcurrentBag<IService> _services = new ConcurrentBag<IService>();
 
+        // List of storages
+
         public HealthyEngine(ILoggerFactory loggerFactory)
         {
             _loggerFactory = loggerFactory;
             _logger = loggerFactory.CreateLogger<HealthyEngine>();
-
         }
 
         public void Start()

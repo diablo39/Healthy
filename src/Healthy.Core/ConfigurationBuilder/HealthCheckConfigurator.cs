@@ -7,11 +7,11 @@ namespace Healthy.Core.ConfigurationBuilder
 {
     class HealthCheckConfigurator : IHealthCheckConfigurator
     {
-        private HealthCheckController _healthCheckRunner;
+        private HealthCheckController _healthCheckcontroller;
 
-        public HealthCheckConfigurator(HealthCheckController healthCheckRunner)
+        public HealthCheckConfigurator(HealthCheckController healthCheckController)
         {
-            _healthCheckRunner = healthCheckRunner;
+            _healthCheckcontroller = healthCheckController;
         }
 
         public IHealthCheckConfigurator AddTag(string tag)
@@ -26,19 +26,19 @@ namespace Healthy.Core.ConfigurationBuilder
 
         public IHealthCheckConfigurator RunEvery(TimeSpan interval)
         {
-            _healthCheckRunner.SetHealthCheckInterval(interval);
+            _healthCheckcontroller.SetHealthCheckInterval(interval);
             return this;
         }
 
         public IHealthCheckConfigurator RunEvery(int seconds)
         {
-            _healthCheckRunner.SetHealthCheckInterval(TimeSpan.FromSeconds(seconds));
+            _healthCheckcontroller.SetHealthCheckInterval(TimeSpan.FromSeconds(seconds));
             return this;
         }
 
         public IDisposable Subscribe(IObserver<HealthCheckResult> observer)
         {
-            return _healthCheckRunner.Subscribe(observer);
+            return _healthCheckcontroller.Subscribe(observer);
         }
     }
 }
