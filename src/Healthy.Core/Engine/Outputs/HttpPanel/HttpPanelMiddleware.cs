@@ -11,12 +11,11 @@ using System.Threading.Tasks;
 
 namespace Healthy.Core.Engine.Outputs.HttpPanel
 {
-    public class HttpPanelMiddleware
+    internal class HttpPanelMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly IHealthyEngine _healthyEngine;
         private readonly IHealthCheckResultStorage _storage;
-        const string BlacklistedHost = "mickl.net";
 
         public HttpPanelMiddleware(RequestDelegate next, IHealthyEngine healthyEngine, IHealthCheckResultStorage storage)
         {
@@ -52,24 +51,6 @@ namespace Healthy.Core.Engine.Outputs.HttpPanel
             await context.Response.WriteAsync(sb.ToString());
 
             return;
-
-            //StringValues referer;
-            //if (context.Request.Headers.TryGetValue("Referer", out referer))
-            //{
-            //    var host = context.Request.Host;
-            //    var refererValue = referer.First();
-            //    if (!refererValue.Contains(host.ToString()))
-            //    {
-            //   //     _logger.LogInformation("We're linked from: ", refererValue);
-            //        if (refererValue.Contains(BlacklistedHost))
-            //        {
-            //            context.Response.StatusCode = 403;
-            //            return;
-            //        }
-            //    }
-            //}
-
-            //await _next.Invoke(context);
         }
     }
 }

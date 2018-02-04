@@ -22,8 +22,6 @@ namespace Healthy.Core.Engine
 
         public IHealthCheckResultStorage HealthCheckResultStorage { get; }
 
-        // List of storages
-
         public HealthyEngine(ILoggerFactory loggerFactory, HealthCheckService healthCheckService, IHealthCheckResultStorage healthCheckResultStorage)
         {
             _loggerFactory = loggerFactory;

@@ -32,19 +32,6 @@ namespace Healthy.Core.Engine.HealthChecks
             _resultStorageObserver = new StorageObserver(_resultStorage);
         }
 
-        //public HealthCheckController AddHealthCheck(IHealthCheck healthCheck)
-        //{
-        //    var healthCheckController = new HealthCheckController(healthCheck, _defaultHealthCheckInterval, _loggerFactory.CreateLogger<HealthCheckController>());
-        //    HealthCheckControllers.Add(healthCheckController);
-
-        //    if (_isRunning)
-        //    {
-        //        healthCheckController.Start();
-        //    }
-
-        //    return healthCheckController;
-        //}
-
         public void SetDefaultHealthCheckInterval(int interval)
         {
             SetDefaultHealthCheckInterval(TimeSpan.FromSeconds(interval));
