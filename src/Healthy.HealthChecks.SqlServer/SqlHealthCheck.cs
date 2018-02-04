@@ -17,8 +17,11 @@ namespace Healthy.HealthChecks.SqlServer
 
         public string Name { get; }
 
+        public string Id { get; }
+
         public SqlHealthCheck(string name, string connectionString, string sqlQuery = null)
         {
+            Id = Guid.NewGuid().ToString();
             Name = name;
             _connectionString = connectionString;
             _sqlQuery = string.IsNullOrWhiteSpace(sqlQuery) ? DefaultSqlQuery : sqlQuery;
@@ -42,11 +45,11 @@ namespace Healthy.HealthChecks.SqlServer
                     }
                 }
 
-                return new HealthCheckResult(Name, HealthCheckResultStatus.Success, sw.Elapsed);
+                return new HealthCheckResult(Id, Name, HealthCheckResultStatus.Success, sw.Elapsed);
             }
             catch (Exception e)
             {
-                return new HealthCheckResult(Name, HealthCheckResultStatus.Failed, sw.Elapsed, e.Message);
+                return new HealthCheckResult(Id, Name, HealthCheckResultStatus.Failed, sw.Elapsed, e.Message);
             }
             finally
             {

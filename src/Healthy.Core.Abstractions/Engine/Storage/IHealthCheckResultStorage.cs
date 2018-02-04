@@ -1,12 +1,12 @@
 ﻿using Healthy.Core.Engine.HealthChecks;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Healthy.Core.Engine.Storage
 {
     public interface IHealthCheckResultStorage
     {
-        void SaveAsync(HealthCheckResult result);
+        Task SaveAsync(HealthCheckResult result);
+
+        Task<HealthCheckResult> GetLastResultAsync(string healthCheckId);
     }
 }

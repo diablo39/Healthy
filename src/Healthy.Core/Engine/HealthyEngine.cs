@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using Healthy.Core.Engine.HealthChecks;
+using Healthy.Core.Engine.Storage;
 
 namespace Healthy.Core.Engine
 {
@@ -13,15 +14,22 @@ namespace Healthy.Core.Engine
     {
         private readonly ILogger<HealthyEngine> _logger;
         private readonly ILoggerFactory _loggerFactory;
+        private readonly HealthCheckService _healthCheckService;
 
         private ConcurrentBag<IService> _services = new ConcurrentBag<IService>();
 
+        public IHealthCheckEngine HealthCheckEngine => _healthCheckService;
+
+        public IHealthCheckResultStorage HealthCheckResultStorage { get; }
+
         // List of storages
 
-        public HealthyEngine(ILoggerFactory loggerFactory)
+        public HealthyEngine(ILoggerFactory loggerFactory, HealthCheckService healthCheckService, IHealthCheckResultStorage healthCheckResultStorage)
         {
             _loggerFactory = loggerFactory;
+            _healthCheckService = healthCheckService;
             _logger = loggerFactory.CreateLogger<HealthyEngine>();
+            HealthCheckResultStorage = healthCheckResultStorage;
         }
 
         public void Start()
@@ -47,7 +55,7 @@ namespace Healthy.Core.Engine
             return result;
         }
 
-        public void RegisterService(IService service)
+        internal void RegisterService(IService service)
         {
             _services.Add(service);
         }

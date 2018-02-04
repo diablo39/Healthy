@@ -17,6 +17,8 @@ namespace Healthy.Core.Engine.HealthChecks
 
         internal IList<IObserver<HealthCheckResult>> _observers = new List<IObserver<HealthCheckResult>>(); // TODO: to thread safe collection
 
+        public IHealthCheck HealthCheck => _healthCheck;
+
         public HealthCheckController(IHealthCheck healthCheck, TimeSpan interval, ILogger<HealthCheckController> logger)
         {
             _healthCheck = healthCheck;
@@ -31,19 +33,20 @@ namespace Healthy.Core.Engine.HealthChecks
             var delayTimeSpan = TimeSpan.FromMilliseconds(delay);
             _timer.Change(delayTimeSpan, _interval);
 
-            _logger.LogInformation("Started health check: {0}, with interval: {1}", _healthCheck.Name, _interval);
+            _logger.LogInformation("Started health check: {0}, with interval: {1}", HealthCheck.Name, _interval);
         }
 
         public void Stop()
         {
             _timer.Change(Timeout.Infinite, Timeout.Infinite);
 
-            Parallel.For(0, _observers.Count, i => _observers[i].OnCompleted());
+            Parallel.For(0, _observers.Count, i => { try { _observers[i].OnCompleted(); } catch { /* TODO: log exception*/ } });
         }
 
         public void SetHealthCheckInterval(TimeSpan interval)
         {
             _interval = interval;
+            _timer.Change(Timeout.InfiniteTimeSpan, _interval);
         }
 
         private async Task ExecuteHealthCheckAsync(IHealthCheck healthCheck)
@@ -54,11 +57,11 @@ namespace Healthy.Core.Engine.HealthChecks
 
                 _logger.LogInformation(result.ToString());
 
-                Parallel.For(0, _observers.Count, i => _observers[i].OnNext(result)); // TODO: consider separate try/catch
+                Parallel.For(0, _observers.Count, i => { try { _observers[i].OnNext(result); } catch { /* TODO: log exception*/ } }); 
             }
             catch (Exception ex)
             {
-                Parallel.For(0, _observers.Count, i => _observers[i].OnError(ex));
+                Parallel.For(0, _observers.Count, i => { try { _observers[i].OnError(ex); } catch { /* TODO: log exception*/ } });
             }
         }
     }

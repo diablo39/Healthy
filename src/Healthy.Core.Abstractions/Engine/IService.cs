@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Healthy.Core.Engine
 {
-    internal interface IService: IDisposable
+    public interface IService: IDisposable
     {
         void Start();
 

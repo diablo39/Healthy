@@ -9,17 +9,17 @@ namespace Healthy.Core
         ///<summary>
         /// Checks if db is available
         ///</summary>
-        public static IHealthCheckConfigurator AddSqlServerHealthCheck(this IHealthChecksConfigurationBuilder cfg, string healthCheckName, string connectionString)
+        public static void AddSqlServerHealthCheck(this IHealthChecksConfigurationBuilder cfg, string healthCheckName, string connectionString, Action<IHealthCheckConfigurator> configurator = null)
         {
-            return cfg.AddHealthCheck(new SqlHealthCheck(healthCheckName, connectionString));
+            cfg.AddHealthCheck(new SqlHealthCheck(healthCheckName, connectionString), configurator);
         }
 
         ///<summary>
         /// Checks if db is available and runs query against database
         ///</summary>
-        public static IHealthCheckConfigurator AddSqlServerHealthCheck(this IHealthChecksConfigurationBuilder cfg, string healthCheckName, string connectionString, string sqlQuery)
+        public static void AddSqlServerHealthCheck(this IHealthChecksConfigurationBuilder cfg, string healthCheckName, string connectionString, string sqlQuery, Action<IHealthCheckConfigurator> configurator = null)
         {
-            return cfg.AddHealthCheck(new SqlHealthCheck(healthCheckName, connectionString, sqlQuery));
+            cfg.AddHealthCheck(new SqlHealthCheck(healthCheckName, connectionString, sqlQuery), configurator);
         }
     }
 }

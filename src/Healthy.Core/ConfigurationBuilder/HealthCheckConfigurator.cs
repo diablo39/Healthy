@@ -35,10 +35,5 @@ namespace Healthy.Core.ConfigurationBuilder
             _healthCheckcontroller.SetHealthCheckInterval(TimeSpan.FromSeconds(seconds));
             return this;
         }
-
-        public IDisposable Subscribe(IObserver<HealthCheckResult> observer)
-        {
-            return _healthCheckcontroller.Subscribe(observer);
-        }
     }
 }

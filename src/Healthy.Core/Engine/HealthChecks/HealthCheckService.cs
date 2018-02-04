@@ -1,40 +1,49 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Healthy.Core.ConfigurationBuilder;
+using Healthy.Core.Engine.Storage;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Healthy.Core.Engine.HealthChecks
 {
-    class HealthCheckService : IService
+    class HealthCheckService : IService, IHealthCheckEngine
     {
         private TimeSpan _defaultHealthCheckInterval = TimeSpan.FromSeconds(15);
 
-        public static ConcurrentBag<HealthCheckController> HealthCheckControllers = new ConcurrentBag<HealthCheckController>();
+        private readonly ConcurrentBag<HealthCheckController> HealthCheckControllers = new ConcurrentBag<HealthCheckController>();
 
         private bool _isRunning = false;
 
         private readonly ILoggerFactory _loggerFactory;
+        private readonly IHealthCheckResultStorage _resultStorage;
+        private StorageObserver _resultStorageObserver;
 
-        public HealthCheckService(ILoggerFactory loggerFactory)
+        public IEnumerable<IHealthCheck> HealthChecks => HealthCheckControllers.Select(e=> e.HealthCheck);
+
+        public HealthCheckService(ILoggerFactory loggerFactory, IHealthCheckResultStorage resultStorage)
         {
             _loggerFactory = loggerFactory;
+            _resultStorage = resultStorage;
+            _resultStorageObserver = new StorageObserver(_resultStorage);
         }
 
-        public HealthCheckController AddHealthCheck(IHealthCheck healthCheck)
-        {
-            var healthCheckController = new HealthCheckController(healthCheck, _defaultHealthCheckInterval, _loggerFactory.CreateLogger<HealthCheckController>());
-            HealthCheckControllers.Add(healthCheckController);
+        //public HealthCheckController AddHealthCheck(IHealthCheck healthCheck)
+        //{
+        //    var healthCheckController = new HealthCheckController(healthCheck, _defaultHealthCheckInterval, _loggerFactory.CreateLogger<HealthCheckController>());
+        //    HealthCheckControllers.Add(healthCheckController);
 
-            if (_isRunning)
-            {
-                healthCheckController.Start();
-            }
+        //    if (_isRunning)
+        //    {
+        //        healthCheckController.Start();
+        //    }
 
-            return healthCheckController;
-        }
+        //    return healthCheckController;
+        //}
 
         public void SetDefaultHealthCheckInterval(int interval)
         {
@@ -77,6 +86,30 @@ namespace Healthy.Core.Engine.HealthChecks
             while (HealthCheckControllers.TryTake(out healthCheckRunner))
             {
                 healthCheckRunner.Dispose();
+            }
+        }
+
+        public void Add(IHealthCheck healthCheck)
+        {
+            Add(healthCheck, null);
+        }
+
+        public void Add(IHealthCheck healthCheck, Action<IHealthCheckConfigurator> configurator)
+        {
+            var healthCheckController = new HealthCheckController(healthCheck, _defaultHealthCheckInterval, _loggerFactory.CreateLogger<HealthCheckController>());
+            HealthCheckControllers.Add(healthCheckController);
+
+            healthCheckController.Subscribe(_resultStorageObserver);
+
+            if(configurator != null)
+            {
+                var c = new HealthCheckConfigurator(healthCheckController);
+                configurator(c);
+            }
+
+            if (_isRunning)
+            {
+                healthCheckController.Start();
             }
         }
     }

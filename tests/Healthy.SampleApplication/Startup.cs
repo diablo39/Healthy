@@ -19,14 +19,16 @@ namespace Healthy.SampleApplication
         public void ConfigureServices(IServiceCollection services)
         {
             // Add services
-
+            services.AddLogging();
             services.AddHealthy();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //loggerFactory.AddConsole(true); - added by default
+            loggerFactory.AddConsole(true);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -41,13 +43,11 @@ namespace Healthy.SampleApplication
                 {
                     checks.SetDefaultHealthCheckInterval(TimeSpan.FromSeconds(15)); // by default run each health check every 15 seconds
 
-                    checks.AddSqlServerHealthCheck("name of sql health check", sqlConnectionString)
-                            .RunEvery(TimeSpan.FromSeconds(10));
+                    checks.AddSqlServerHealthCheck("name of sql health check", sqlConnectionString, configurator => configurator.RunEvery(2));
 
-                    checks.AddSqlServerHealthCheck("Name of sql health check with query", sqlConnectionString, sqlQuery)
-                            .RunEvery(7);
+                    checks.AddSqlServerHealthCheck("Name of sql health check with query", sqlConnectionString, sqlQuery, configurator => configurator.RunEvery(4));
 
-                    checks.AddHealthCheckResultStorage((IHeatlCheckResultStorage)null);
+                    //checks.AddHealthCheckResultStorage((IHeatlCheckResultStorage)null);
 
                 })
                 .ConfigureOutputs(o =>

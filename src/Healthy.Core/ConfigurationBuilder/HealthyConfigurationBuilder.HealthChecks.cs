@@ -8,18 +8,19 @@ namespace Healthy.Core.ConfigurationBuilder
     {
         private HealthCheckService _healthChecksService;
 
-        public IHealthCheckConfigurator AddHealthCheck(IHealthCheck healthCheck)
+        public void AddHealthCheck(IHealthCheck healthCheck)
         {
-            var healthCheckRunnerService = _healthChecksService;
-            var healthCheckRunner = healthCheckRunnerService.AddHealthCheck(healthCheck);
-            var configurator = new HealthCheckConfigurator(healthCheckRunner);
-            return configurator;
+            _healthChecksService.Add(healthCheck);
+        }
+
+        public void AddHealthCheck(IHealthCheck healthCheck, Action<IHealthCheckConfigurator> configurator = null)
+        {
+            _healthChecksService.Add(healthCheck, configurator);
         }
 
         public void SetDefaultHealthCheckInterval(TimeSpan timeSpan)
         {
-            var healthChecksRunnerService = _healthChecksService;
-            healthChecksRunnerService.SetDefaultHealthCheckInterval(timeSpan);
+            _healthChecksService.SetDefaultHealthCheckInterval(timeSpan);
         }
     }
 }

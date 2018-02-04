@@ -1,6 +1,5 @@
 ﻿using Healthy.Core.Engine.HealthChecks;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,21 +7,27 @@ namespace Healthy.Core.Engine.Storage
 {
     class StorageObserver : IObserver<HealthCheckResult>
     {
-        private ConcurrentBag<IHealthCheckResultStorage> _storages;
+        private readonly IHealthCheckResultStorage _storage;
 
-        public void OnCompleted()
+        public StorageObserver(IHealthCheckResultStorage storage)
         {
-            Console.WriteLine("Completed");
+            _storage = storage;
         }
 
-        public void OnError(Exception error)
-        {
-            Console.WriteLine("Error");
-        }
+        public void OnCompleted() { }
 
-        public void OnNext(HealthCheckResult value)
+        public void OnError(Exception error) { }
+
+        public async void OnNext(HealthCheckResult value)
         {
-            Console.WriteLine("On next");
+            try
+            {
+                await _storage.SaveAsync(value);
+            }
+            catch
+            {
+                // TODO: Log
+            }
         }
     }
 }

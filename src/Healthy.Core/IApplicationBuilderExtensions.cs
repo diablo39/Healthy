@@ -10,7 +10,7 @@ namespace Healthy.Core
     {
         public static void UseHealthy(this IApplicationBuilder app, Action<IHealthyConfigurationBuilder> cfg)
         {
-            var healthyEngine = (HealthyEngine)app.ApplicationServices.GetService(typeof(HealthyEngine));
+            var healthyEngine = (HealthyEngine)app.ApplicationServices.GetService(typeof(IHealthyEngine));
 
             healthyEngine.RegisterService((HealthCheckService)app.ApplicationServices.GetService(typeof(HealthCheckService)));
 

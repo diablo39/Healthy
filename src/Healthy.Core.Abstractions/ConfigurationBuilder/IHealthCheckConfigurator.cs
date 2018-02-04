@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Healthy.Core.ConfigurationBuilder
 {
-    public interface IHealthCheckConfigurator: IObservable<HealthCheckResult>
+    public interface IHealthCheckConfigurator
     {
         IHealthCheckConfigurator RunEvery(TimeSpan interval);
 
@@ -14,5 +14,6 @@ namespace Healthy.Core.ConfigurationBuilder
         IHealthCheckConfigurator AddTag(string tag);
 
         IHealthCheckConfigurator AddTags(params string[] tags);
+
     }
 }

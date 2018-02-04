@@ -8,11 +8,11 @@ namespace Healthy.Core.Engine
 {
     partial class HealthyEngine : IDisposable
     {
-        private bool disposedValue = false; // To detect redundant calls
+        private bool isDisposed = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!isDisposed)
             {
                 if (disposing)
                 {
@@ -26,7 +26,7 @@ namespace Healthy.Core.Engine
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
 
-                disposedValue = true;
+                isDisposed = true;
 
             }
         }
